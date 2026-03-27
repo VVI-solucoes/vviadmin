@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VVI Admin — Gerador de Produtos</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0F1117;--bg2:#161821;--bg3:#1E2030;--bg4:#282A3A;--em:#00D4AA;--em2:#00F0C0;--emG:rgba(0,212,170,0.1);--text:#E0E1E6;--text2:#8B8FA0;--text3:#555868;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);--red:#F87171;--amber:#F59E0B;--blue:#60A5FA;--purple:#A78BFA;--w:#FFFFFF;--r:14px;--rs:10px;}
@@ -70,6 +71,45 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .client-meta{font-size:12px;color:var(--text3);margin-top:2px;}
 .client-actions{display:flex;gap:6px;}
 
+/* KPI grid */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.kpi{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:all 0.2s;}
+.kpi:hover{border-color:var(--border2);transform:translateY(-2px);}
+.kpi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.kpi-icon{width:40px;height:40px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.kpi-icon.green{background:var(--emG);}.kpi-icon.amber{background:rgba(245,158,11,0.1);}.kpi-icon.red{background:rgba(248,113,113,0.1);}.kpi-icon.blue{background:rgba(96,165,250,0.1);}.kpi-icon.purple{background:rgba(167,139,250,0.1);}
+.kpi-trend{font-size:11px;font-weight:700;padding:3px 8px;border-radius:50px;}
+.kpi-trend.up{background:var(--emG);color:var(--em);}.kpi-trend.down{background:rgba(248,113,113,0.1);color:var(--red);}.kpi-trend.neutral{background:var(--bg4);color:var(--text3);}
+.kpi-val{font-size:28px;font-weight:800;color:var(--w);line-height:1;margin-bottom:4px;}
+.kpi-lbl{font-size:12px;color:var(--text3);}
+
+/* cols */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.chart-c{height:240px;position:relative;}
+
+/* finance table */
+.fin-table{width:100%;border-collapse:collapse;font-size:13px;}
+.fin-table thead th{text-align:left;padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text3);background:var(--bg3);border-bottom:1px solid var(--border);}
+.fin-table tbody td{padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text2);}
+.fin-table tbody tr:last-child td{border-bottom:none;}
+.fin-status{padding:3px 10px;border-radius:50px;font-size:11px;font-weight:700;}
+.fs-paid{background:var(--emG);color:var(--em);}.fs-pending{background:rgba(245,158,11,0.1);color:var(--amber);}.fs-late{background:rgba(248,113,113,0.1);color:var(--red);}
+
+/* finance form */
+.fin-form{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:20px;}
+.btn-fin{height:44px;padding:0 18px;border-radius:var(--rs);border:none;background:var(--em);color:var(--bg);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;}
+
+/* metric card */
+.metric-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:16px;}
+.metric-card h3{font-size:15px;font-weight:700;color:var(--w);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.metric-card h3 span{font-size:18px;}
+.metric-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
+.metric-row:last-child{border:none;}
+.metric-label{font-size:13px;color:var(--text2);}
+.metric-value{font-size:15px;font-weight:700;color:var(--w);}
+.metric-bar-wrap{width:120px;height:6px;background:var(--bg4);border-radius:6px;overflow:hidden;margin-left:12px;}
+.metric-bar-fill{height:100%;border-radius:6px;}
+
 /* progress */
 .progress-bar{width:100%;height:6px;background:var(--bg4);border-radius:6px;margin:16px 0;overflow:hidden;}
 .progress-fill{height:100%;background:var(--em);border-radius:6px;transition:width 0.5s ease;width:0;}
@@ -78,7 +118,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .toast{position:fixed;bottom:24px;right:24px;background:var(--em);color:var(--bg);padding:14px 24px;border-radius:var(--rs);font-size:14px;font-weight:700;z-index:600;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none;}
 .toast.show{opacity:1;transform:translateY(0);}
 
-@media(max-width:768px){.sidebar{display:none;}.form-row,.form-row.triple{grid-template-columns:1fr;}.content{padding:20px 16px;}.topbar{padding:16px;}}
+@media(max-width:768px){.sidebar{display:none;}.form-row,.form-row.triple{grid-template-columns:1fr;}.content{padding:20px 16px;}.topbar{padding:16px;}.kpi-grid{grid-template-columns:1fr 1fr;}.cols{grid-template-columns:1fr;}.fin-form{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
@@ -88,6 +128,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   <div class="nav-label">Ferramentas</div>
   <button class="nav-item active" onclick="showPage('gen')"><span>⚡</span> Gerar Produto</button>
   <button class="nav-item" onclick="showPage('clients')"><span>👥</span> Clientes</button>
+  <button class="nav-item" onclick="showPage('finance')"><span>💰</span> Financeiro</button>
+  <button class="nav-item" onclick="showPage('metrics')"><span>📈</span> Métricas</button>
 </div>
 
 <div class="main">
@@ -186,6 +228,16 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   <div class="content" id="pg-clients" style="display:none">
     <div id="clientsList"></div>
   </div>
+
+  <!-- ═══ FINANCE ═══ -->
+  <div class="content" id="pg-finance" style="display:none">
+    <div id="financeContent"></div>
+  </div>
+
+  <!-- ═══ METRICS ═══ -->
+  <div class="content" id="pg-metrics" style="display:none">
+    <div id="metricsContent"></div>
+  </div>
 </div>
 </div>
 
@@ -193,13 +245,17 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <script>
 // ═══ NAV ═══
+const pages = ['gen','clients','finance','metrics'];
+const pageTitles = {gen:['Gerar Produto','Preencha os dados e baixe os 3 arquivos prontos'],clients:['Clientes','Clientes cadastrados'],finance:['Financeiro','Receita, pagamentos e faturamento da VVI'],metrics:['Métricas','Indicadores de marketing e crescimento']};
+
 function showPage(pg){
-  document.getElementById('pg-gen').style.display = pg==='gen'?'block':'none';
-  document.getElementById('pg-clients').style.display = pg==='clients'?'block':'none';
-  document.querySelectorAll('.nav-item').forEach((n,i)=>{n.classList.toggle('active',i==={gen:0,clients:1}[pg]);});
-  document.getElementById('pageTitle').textContent = pg==='gen'?'Gerar Produto':'Clientes';
-  document.getElementById('pageSub').textContent = pg==='gen'?'Preencha os dados e baixe os 3 arquivos prontos':'Clientes cadastrados';
+  pages.forEach(p=>{document.getElementById('pg-'+p).style.display=p===pg?'block':'none';});
+  document.querySelectorAll('.nav-item').forEach((n,i)=>{n.classList.toggle('active',i===pages.indexOf(pg));});
+  document.getElementById('pageTitle').textContent=pageTitles[pg][0];
+  document.getElementById('pageSub').textContent=pageTitles[pg][1];
   if(pg==='clients') renderClients();
+  if(pg==='finance') renderFinance();
+  if(pg==='metrics') renderMetrics();
 }
 
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
@@ -289,7 +345,11 @@ function saveClients(a){localStorage.setItem('vvi_clients2',JSON.stringify(a));}
 function saveClient(){
   const cfg=getCfg();
   const clients=getClients();
-  clients.push({...cfg, id:Date.now().toString(36), createdAt:new Date().toISOString()});
+  const existing = clients.find(c=>c.name===cfg.name);
+  if(existing){toast('Cliente já existe.');return;}
+  clients.push({...cfg, id:Date.now().toString(36), createdAt:new Date().toISOString(), status:'active',
+    payments:[{date:new Date().toISOString().slice(0,10),amount:997,desc:'Implantação',status:'paid'},{date:new Date().toISOString().slice(0,10),amount:99.90,desc:'Mensalidade',status:'pending'}]
+  });
   saveClients(clients);
   toast('Cliente salvo!');
 }
@@ -300,8 +360,159 @@ function renderClients(){
   const NICHOS={nutri:'Nutricionista',personal:'Personal Trainer',psi:'Psicólogo(a)'};
   el.innerHTML = clients.map(c=>{
     const ini=c.name.split(' ').map(w=>w[0]).join('').slice(0,2);
-    return `<div class="client-card" onclick="loadClient('${c.id}')"><div class="client-avatar" style="background:${c.cor1}">${ini}</div><div class="client-info"><div class="client-name">${c.name}</div><div class="client-meta">${NICHOS[c.nicho]||c.nicho} · ${c.reg} · ${new Date(c.createdAt).toLocaleDateString('pt-BR')}</div></div><div class="client-actions"><button class="btn btn-sm btn-secondary" onclick="event.stopPropagation();loadClient('${c.id}')">Editar</button></div></div>`;
+    const totalPaid = (c.payments||[]).filter(p=>p.status==='paid').reduce((s,p)=>s+p.amount,0);
+    return `<div class="client-card" onclick="loadClient('${c.id}')"><div class="client-avatar" style="background:${c.cor1}">${ini}</div><div class="client-info"><div class="client-name">${c.name}</div><div class="client-meta">${NICHOS[c.nicho]||c.nicho} · ${c.reg} · Receita: R$${totalPaid.toFixed(2).replace('.',',')}</div></div><div class="client-actions"><button class="btn btn-sm btn-secondary" onclick="event.stopPropagation();loadClient('${c.id}')">Editar</button></div></div>`;
   }).join('');
+}
+
+// ═══ FINANCE ═══
+function renderFinance(){
+  const clients=getClients(), el=document.getElementById('financeContent');
+  const allPay = clients.flatMap(c=>(c.payments||[]).map(p=>({...p,client:c.name,clientId:c.id})));
+  const paid = allPay.filter(p=>p.status==='paid').reduce((s,p)=>s+p.amount,0);
+  const pending = allPay.filter(p=>p.status==='pending').reduce((s,p)=>s+p.amount,0);
+  const late = allPay.filter(p=>p.status==='late').reduce((s,p)=>s+p.amount,0);
+  const implant = allPay.filter(p=>p.status==='paid'&&p.desc==='Implantação').reduce((s,p)=>s+p.amount,0);
+  const recurrent = allPay.filter(p=>p.status==='paid'&&p.desc!=='Implantação').reduce((s,p)=>s+p.amount,0);
+  const fmt = v=>'R$ '+v.toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  const fmtD = d=>{const[y,m,dd]=d.split('-');return dd+'/'+m+'/'+y;};
+
+  // monthly data
+  const months={};allPay.filter(p=>p.status==='paid').forEach(p=>{const m=p.date.slice(0,7);months[m]=(months[m]||0)+p.amount;});
+  const mKeys=Object.keys(months).sort();
+
+  el.innerHTML=`
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-top"><div class="kpi-icon green">💰</div></div><div class="kpi-val">${fmt(paid)}</div><div class="kpi-lbl">Total recebido</div></div>
+      <div class="kpi"><div class="kpi-top"><div class="kpi-icon amber">⏳</div></div><div class="kpi-val">${fmt(pending)}</div><div class="kpi-lbl">A receber</div></div>
+      <div class="kpi"><div class="kpi-top"><div class="kpi-icon red">🔴</div></div><div class="kpi-val">${fmt(late)}</div><div class="kpi-lbl">Atrasado</div></div>
+      <div class="kpi"><div class="kpi-top"><div class="kpi-icon blue">🔄</div></div><div class="kpi-val">${fmt(recurrent)}</div><div class="kpi-lbl">Recorrência</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>➕</span> Registrar pagamento</div>
+      <div class="card-desc">Adicione um pagamento a um cliente existente</div>
+      <div class="fin-form">
+        <div class="fg"><label>Cliente</label><select id="finClient">${clients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}</select></div>
+        <div class="fg"><label>Valor (R$)</label><input type="number" step="0.01" id="finVal" placeholder="99.90"/></div>
+        <div class="fg"><label>Descrição</label><select id="finDesc"><option value="Mensalidade">Mensalidade</option><option value="Implantação">Implantação</option><option value="Extra">Serviço extra</option></select></div>
+        <div class="fg"><label>Status</label><select id="finSt"><option value="paid">Pago</option><option value="pending">Pendente</option><option value="late">Atrasado</option></select></div>
+        <button class="btn-fin" onclick="addPayment()">+ Adicionar</button>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="card"><div class="card-title"><span>📊</span> Faturamento mensal</div><div style="padding:16px 20px 20px;"><div class="chart-c"><canvas id="finChart"></canvas></div></div></div>
+      <div class="card"><div class="card-title"><span>💳</span> Últimos pagamentos</div><div style="overflow-x:auto;padding:0 0 8px;">
+        <table class="fin-table"><thead><tr><th>Data</th><th>Cliente</th><th>Desc</th><th>Valor</th><th>Status</th></tr></thead><tbody>
+        ${[...allPay].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10).map(p=>{
+          const sc={paid:'fs-paid',pending:'fs-pending',late:'fs-late'}[p.status];
+          const sl={paid:'Pago',pending:'Pendente',late:'Atrasado'}[p.status];
+          return `<tr><td>${fmtD(p.date)}</td><td style="font-weight:700;color:var(--w)">${p.client}</td><td>${p.desc}</td><td style="font-weight:700">${fmt(p.amount)}</td><td><span class="fin-status ${sc}">${sl}</span></td></tr>`;
+        }).join('')}
+        </tbody></table>
+      </div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>👥</span> Receita por cliente</div>
+      <div style="overflow-x:auto;padding:0 0 8px;">
+        <table class="fin-table"><thead><tr><th>Cliente</th><th>Implantação</th><th>Recorrência</th><th>Total</th><th>Status</th></tr></thead><tbody>
+        ${clients.map(c=>{
+          const impl=(c.payments||[]).filter(p=>p.status==='paid'&&p.desc==='Implantação').reduce((s,p)=>s+p.amount,0);
+          const rec=(c.payments||[]).filter(p=>p.status==='paid'&&p.desc!=='Implantação').reduce((s,p)=>s+p.amount,0);
+          const pend=(c.payments||[]).filter(p=>p.status==='pending').reduce((s,p)=>s+p.amount,0);
+          return `<tr><td style="font-weight:700;color:var(--w)">${c.name}</td><td>${fmt(impl)}</td><td>${fmt(rec)}</td><td style="font-weight:700">${fmt(impl+rec)}</td><td>${pend>0?'<span class="fin-status fs-pending">R$'+pend.toFixed(2).replace('.',',')+' pendente</span>':'<span class="fin-status fs-paid">Em dia</span>'}</td></tr>`;
+        }).join('')}
+        </tbody></table>
+      </div>
+    </div>`;
+
+  // Chart
+  if(mKeys.length){
+    setTimeout(()=>{
+      new Chart(document.getElementById('finChart'),{type:'bar',data:{labels:mKeys.map(k=>{const[y,m]=k.split('-');return m+'/'+y;}),datasets:[{label:'Faturamento',data:mKeys.map(k=>months[k]),backgroundColor:'rgba(0,212,170,0.2)',borderColor:'#00D4AA',borderWidth:2,borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#555868'}},y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#555868',callback:v=>'R$'+v}}}}});
+    },100);
+  }
+}
+
+function addPayment(){
+  const id=document.getElementById('finClient').value,val=parseFloat(document.getElementById('finVal').value);
+  if(!val){alert('Informe o valor.');return;}
+  const clients=getClients(),c=clients.find(x=>x.id===id);if(!c)return;
+  if(!c.payments)c.payments=[];
+  c.payments.push({date:new Date().toISOString().slice(0,10),amount:val,desc:document.getElementById('finDesc').value,status:document.getElementById('finSt').value});
+  saveClients(clients);renderFinance();toast('Pagamento registrado!');
+}
+
+// ═══ METRICS ═══
+function renderMetrics(){
+  const clients=getClients(), el=document.getElementById('metricsContent');
+  const total=clients.length;
+  const active=clients.filter(c=>c.status==='active').length;
+  const NICHOS={nutri:'Nutricionista',personal:'Personal Trainer',psi:'Psicólogo(a)'};
+  const nichoCount={};clients.forEach(c=>{nichoCount[c.nicho]=(nichoCount[c.nicho]||0)+1;});
+
+  const allPay=clients.flatMap(c=>(c.payments||[]));
+  const totalRevenue=allPay.filter(p=>p.status==='paid').reduce((s,p)=>s+p.amount,0);
+  const mrr=clients.length*99.90;
+  const implRevenue=allPay.filter(p=>p.status==='paid'&&p.desc==='Implantação').reduce((s,p)=>s+p.amount,0);
+  const recRevenue=allPay.filter(p=>p.status==='paid'&&p.desc!=='Implantação').reduce((s,p)=>s+p.amount,0);
+  const avgTicket=total>0?(totalRevenue/total):0;
+  const churn=0; // placeholder
+  const ltv=total>0?(totalRevenue/total):0;
+  const fmt=v=>'R$ '+v.toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+
+  // monthly client acquisition
+  const monthlyAcq={};clients.forEach(c=>{const m=(c.createdAt||'').slice(0,7);if(m)monthlyAcq[m]=(monthlyAcq[m]||0)+1;});
+  const acqKeys=Object.keys(monthlyAcq).sort();
+
+  el.innerHTML=`
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-top"><div class="kpi-icon green">👥</div><span class="kpi-trend up">Ativo</span></div><div class="kpi-val">${total}</div><div class="kpi-lbl">Clientes totais</div></div>
+      <div class="kpi"><div class="kpi-top"><div class="kpi-icon amber">💰</div></div><div class="kpi-val">${fmt(mrr)}</div><div class="kpi-lbl">MRR (potencial)</div></div>
+      <div class="kpi"><div class="kpi-top"><div class="kpi-icon blue">🎫</div></div><div class="kpi-val">${fmt(avgTicket)}</div><div class="kpi-lbl">Ticket médio</div></div>
+      <div class="kpi"><div class="kpi-top"><div class="kpi-icon purple">📈</div></div><div class="kpi-val">${fmt(totalRevenue)}</div><div class="kpi-lbl">Receita total</div></div>
+    </div>
+
+    <div class="cols">
+      <div class="card"><div class="card-title"><span>📊</span> Aquisição de clientes</div><div style="padding:16px 20px 20px;"><div class="chart-c"><canvas id="acqChart"></canvas></div></div></div>
+
+      <div>
+        <div class="metric-card">
+          <h3><span>🎯</span> Distribuição por nicho</h3>
+          ${Object.entries(nichoCount).map(([k,v])=>{
+            const pct=total>0?Math.round((v/total)*100):0;
+            const color=k==='nutri'?'#00D4AA':k==='personal'?'#60A5FA':'#A78BFA';
+            return `<div class="metric-row"><span class="metric-label">${NICHOS[k]||k}</span><div style="display:flex;align-items:center;gap:8px;"><span class="metric-value">${v}</span><div class="metric-bar-wrap"><div class="metric-bar-fill" style="width:${pct}%;background:${color}"></div></div><span style="font-size:11px;color:var(--text3)">${pct}%</span></div></div>`;
+          }).join('')}
+        </div>
+
+        <div class="metric-card">
+          <h3><span>💸</span> Breakdown de receita</h3>
+          <div class="metric-row"><span class="metric-label">Implantações</span><span class="metric-value">${fmt(implRevenue)}</span></div>
+          <div class="metric-row"><span class="metric-label">Recorrência</span><span class="metric-value">${fmt(recRevenue)}</span></div>
+          <div class="metric-row"><span class="metric-label">% Recorrente</span><span class="metric-value" style="color:var(--em)">${totalRevenue>0?Math.round((recRevenue/totalRevenue)*100):0}%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <h3><span>📋</span> Indicadores de saúde do negócio</h3>
+      <div class="metric-row"><span class="metric-label">MRR (Monthly Recurring Revenue)</span><span class="metric-value" style="color:var(--em)">${fmt(mrr)}</span></div>
+      <div class="metric-row"><span class="metric-label">ARR projetado (MRR × 12)</span><span class="metric-value">${fmt(mrr*12)}</span></div>
+      <div class="metric-row"><span class="metric-label">Ticket médio por cliente (lifetime)</span><span class="metric-value">${fmt(avgTicket)}</span></div>
+      <div class="metric-row"><span class="metric-label">Receita de implantação</span><span class="metric-value">${fmt(implRevenue)}</span></div>
+      <div class="metric-row"><span class="metric-label">Clientes ativos</span><span class="metric-value">${active} de ${total}</span></div>
+      <div class="metric-row"><span class="metric-label">Meta próximo mês (+5 clientes)</span><span class="metric-value">${fmt((total+5)*99.90)} MRR</span></div>
+    </div>`;
+
+  // Acquisition chart
+  if(acqKeys.length){
+    setTimeout(()=>{
+      new Chart(document.getElementById('acqChart'),{type:'line',data:{labels:acqKeys.map(k=>{const[y,m]=k.split('-');return m+'/'+y;}),datasets:[{label:'Novos clientes',data:acqKeys.map(k=>monthlyAcq[k]),borderColor:'#00D4AA',backgroundColor:'rgba(0,212,170,0.1)',borderWidth:2.5,pointRadius:5,tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#555868'}},y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#555868',stepSize:1}}}}});
+    },100);
+  }
 }
 
 function loadClient(id){
