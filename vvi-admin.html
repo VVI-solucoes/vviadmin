@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VVI Admin — Kit de Personalização Rápida</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0F1117;--bg2:#161821;--bg3:#1E2030;--bg4:#282A3A;
+  --em:#00D4AA;--em2:#00F0C0;--emG:rgba(0,212,170,0.1);
+  --text:#E0E1E6;--text2:#8B8FA0;--text3:#555868;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --red:#F87171;--amber:#F59E0B;--blue:#60A5FA;--purple:#A78BFA;
+  --w:#FFFFFF;--r:14px;--rs:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* layout */
+.app{display:flex;min-height:100vh;}
+.sidebar{width:240px;background:var(--bg2);border-right:1px solid var(--border);padding:24px 16px;flex-shrink:0;display:flex;flex-direction:column;}
+.main{flex:1;overflow-y:auto;}
+
+.sidebar-logo{display:flex;align-items:center;gap:10px;margin-bottom:32px;}
+.sidebar-logo-mark{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--em),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:var(--bg);}
+.sidebar-logo-text{font-weight:800;font-size:16px;color:var(--text);}
+.sidebar-logo-text em{font-style:normal;color:var(--em);}
+
+.nav-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:10px;padding:0 8px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rs);cursor:pointer;color:var(--text2);font-size:13px;font-weight:600;border:none;background:none;width:100%;text-align:left;font-family:inherit;transition:all 0.15s;}
+.nav-item:hover{background:rgba(255,255,255,0.04);color:var(--text);}
+.nav-item.active{background:var(--emG);color:var(--em);}
+.nav-item span{font-size:18px;width:24px;text-align:center;}
+
+.topbar{padding:20px 32px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.topbar h1{font-size:22px;font-weight:800;color:var(--w);}
+.topbar-sub{font-size:13px;color:var(--text2);margin-top:2px;}
+
+.content{padding:28px 32px;max-width:900px;}
+
+/* form */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin-bottom:20px;}
+.card-title{font-size:16px;font-weight:700;color:var(--w);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.card-title span{font-size:20px;}
+.card-desc{font-size:13px;color:var(--text2);margin-bottom:20px;}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.form-row.single{grid-template-columns:1fr;}
+.form-row.triple{grid-template-columns:1fr 1fr 1fr;}
+
+.fg label{display:block;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+.fg input,.fg select,.fg textarea{
+  width:100%;height:44px;border-radius:var(--rs);border:1.5px solid var(--border2);
+  padding:0 14px;font-family:inherit;font-size:14px;color:var(--text);
+  background:var(--bg3);outline:none;transition:border-color 0.2s;
+}
+.fg textarea{height:90px;padding:12px 14px;resize:vertical;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--em);}
+.fg input::placeholder{color:var(--text3);}
+.fg .hint{font-size:11px;color:var(--text3);margin-top:4px;}
+
+.color-row{display:flex;gap:12px;align-items:center;}
+.color-preview{width:44px;height:44px;border-radius:var(--rs);border:2px solid var(--border2);cursor:pointer;flex-shrink:0;}
+.color-input{flex:1;}
+
+/* preview section */
+.preview-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.preview-tabs{display:flex;gap:6px;}
+.preview-tab{padding:8px 16px;border-radius:50px;border:1.5px solid var(--border2);background:none;color:var(--text2);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s;}
+.preview-tab.active{background:var(--emG);border-color:var(--em);color:var(--em);}
+.preview-frame{width:100%;height:600px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg3);overflow:hidden;}
+.preview-frame iframe{width:100%;height:100%;border:none;}
+
+/* actions */
+.actions{display:flex;gap:12px;margin-top:24px;}
+.btn{padding:14px 28px;border-radius:var(--rs);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;border:none;}
+.btn-primary{background:var(--em);color:var(--bg);}
+.btn-primary:hover{background:var(--em2);}
+.btn-secondary{background:var(--bg4);color:var(--text);border:1.5px solid var(--border2);}
+.btn-secondary:hover{border-color:var(--em);color:var(--em);}
+.btn-danger{background:rgba(248,113,113,0.1);color:var(--red);border:1.5px solid rgba(248,113,113,0.2);}
+
+/* clients list */
+.clients-list{display:flex;flex-direction:column;gap:10px;}
+.client-card{display:flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;cursor:pointer;transition:all 0.15s;}
+.client-card:hover{border-color:var(--border2);background:var(--bg3);}
+.client-avatar{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--w);flex-shrink:0;}
+.client-info{flex:1;min-width:0;}
+.client-name{font-size:15px;font-weight:700;color:var(--w);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.client-meta{font-size:12px;color:var(--text3);margin-top:2px;}
+.client-status{padding:4px 12px;border-radius:50px;font-size:11px;font-weight:700;}
+.cs-active{background:var(--emG);color:var(--em);}
+.cs-pending{background:rgba(245,158,11,0.1);color:var(--amber);}
+.cs-inactive{background:rgba(248,113,113,0.1);color:var(--red);}
+
+/* generated code modal */
+.code-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.code-modal.open{display:flex;}
+.code-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:700px;max-height:80vh;overflow:hidden;display:flex;flex-direction:column;}
+.code-box-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.code-box-header h3{font-size:16px;font-weight:700;color:var(--w);}
+.code-box-close{width:32px;height:32px;border-radius:8px;border:none;background:var(--bg4);cursor:pointer;font-size:16px;color:var(--text2);display:flex;align-items:center;justify-content:center;}
+.code-box-body{padding:20px 24px;overflow-y:auto;flex:1;}
+.code-block{background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);padding:16px;font-family:'Courier New',monospace;font-size:12px;color:var(--em);line-height:1.6;white-space:pre-wrap;word-break:break-all;max-height:400px;overflow-y:auto;}
+.code-box-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;}
+
+/* toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--em);color:var(--bg);padding:14px 24px;border-radius:var(--rs);font-size:14px;font-weight:700;z-index:600;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+
+@media(max-width:768px){
+  .sidebar{display:none;}.form-row{grid-template-columns:1fr;}
+  .form-row.triple{grid-template-columns:1fr;}.content{padding:20px 16px;}
+  .topbar{padding:16px;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sidebar-logo"><div class="sidebar-logo-mark">VVI</div><div class="sidebar-logo-text">VVI <em>Admin</em></div></div>
+  <div class="nav-label">Ferramentas</div>
+  <button class="nav-item active" onclick="showPage('generator')"><span>🎨</span> Personalizar</button>
+  <button class="nav-item" onclick="showPage('clients')"><span>👥</span> Clientes</button>
+  <button class="nav-item" onclick="showPage('templates')"><span>📦</span> Templates</button>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div>
+      <h1 id="pageTitle">Kit de Personalização</h1>
+      <div class="topbar-sub" id="pageSub">Gere o produto completo para cada cliente em minutos</div>
+    </div>
+  </div>
+
+  <!-- ═══ GENERATOR PAGE ═══ -->
+  <div class="content" id="pg-generator">
+
+    <!-- Client Info -->
+    <div class="card">
+      <div class="card-title"><span>👤</span> Dados do Cliente</div>
+      <div class="card-desc">Informações básicas do profissional</div>
+      <div class="form-row">
+        <div class="fg"><label>Nome completo</label><input type="text" id="cName" placeholder="Dra. Ana Souza" oninput="liveUpdate()"/></div>
+        <div class="fg"><label>Especialidade</label>
+          <select id="cType" onchange="liveUpdate()">
+            <option value="nutri">Nutricionista</option>
+            <option value="personal">Personal Trainer</option>
+            <option value="psi">Psicólogo(a)</option>
+            <option value="fisio">Fisioterapeuta</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>CRP / CRN / CREF</label><input type="text" id="cReg" placeholder="CRN 12345" oninput="liveUpdate()"/></div>
+        <div class="fg"><label>WhatsApp (com DDD)</label><input type="tel" id="cWhatsApp" placeholder="11999998888" oninput="liveUpdate()"/></div>
+      </div>
+      <div class="form-row single">
+        <div class="fg">
+          <label>Mensagem do WhatsApp</label>
+          <textarea id="cWAMsg" placeholder="Olá! Fiz a avaliação e gostaria de agendar uma consulta." oninput="liveUpdate()"></textarea>
+          <div class="hint">Essa é a mensagem que o lead envia automaticamente ao clicar no botão do WhatsApp</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual Identity -->
+    <div class="card">
+      <div class="card-title"><span>🎨</span> Identidade Visual</div>
+      <div class="card-desc">Cores e estilo do produto</div>
+      <div class="form-row triple">
+        <div class="fg">
+          <label>Cor principal</label>
+          <div class="color-row">
+            <input type="color" id="cColor1" value="#2D9D78" class="color-preview" onchange="document.getElementById('cColor1Hex').value=this.value;liveUpdate()"/>
+            <input type="text" id="cColor1Hex" value="#2D9D78" class="color-input" oninput="document.getElementById('cColor1').value=this.value;liveUpdate()"/>
+          </div>
+        </div>
+        <div class="fg">
+          <label>Cor secundária</label>
+          <div class="color-row">
+            <input type="color" id="cColor2" value="#E6F7F0" class="color-preview" onchange="document.getElementById('cColor2Hex').value=this.value;liveUpdate()"/>
+            <input type="text" id="cColor2Hex" value="#E6F7F0" class="color-input" oninput="document.getElementById('cColor2').value=this.value;liveUpdate()"/>
+          </div>
+        </div>
+        <div class="fg">
+          <label>Cor de destaque</label>
+          <div class="color-row">
+            <input type="color" id="cColor3" value="#C4704B" class="color-preview" onchange="document.getElementById('cColor3Hex').value=this.value;liveUpdate()"/>
+            <input type="text" id="cColor3Hex" value="#C4704B" class="color-input" oninput="document.getElementById('cColor3').value=this.value;liveUpdate()"/>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg">
+          <label>Subdomínio</label>
+          <input type="text" id="cSubdomain" placeholder="draana" oninput="liveUpdate()"/>
+          <div class="hint" id="subdomainPreview">→ draana.vvisolucoes.com.br</div>
+        </div>
+        <div class="fg">
+          <label>Título do Quiz</label>
+          <input type="text" id="cQuizTitle" placeholder="Descubra como está sua saúde nutricional" oninput="liveUpdate()"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz customization -->
+    <div class="card">
+      <div class="card-title"><span>🧠</span> Configuração do Quiz</div>
+      <div class="card-desc">Número de perguntas e template base</div>
+      <div class="form-row">
+        <div class="fg">
+          <label>Template base</label>
+          <select id="cTemplate" onchange="liveUpdate()">
+            <option value="nutri">Nutricionista — Diagnóstico nutricional</option>
+            <option value="personal">Personal — Avaliação fitness</option>
+            <option value="psi">Psicólogo — Saúde emocional</option>
+            <option value="fisio">Fisioterapeuta — Avaliação postural</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Nº de perguntas</label>
+          <select id="cQuestions">
+            <option value="5">5 perguntas (~1 min)</option>
+            <option value="7" selected>7 perguntas (~2 min)</option>
+            <option value="10">10 perguntas (~3 min)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn btn-primary" onclick="generateAll()">⚡ Gerar produto completo</button>
+      <button class="btn btn-secondary" onclick="saveClient()">💾 Salvar cliente</button>
+      <button class="btn btn-secondary" onclick="previewQuiz()">👁️ Preview do quiz</button>
+    </div>
+
+  </div>
+
+  <!-- ═══ CLIENTS PAGE ═══ -->
+  <div class="content" id="pg-clients" style="display:none">
+    <div id="clientsList"></div>
+  </div>
+
+  <!-- ═══ TEMPLATES PAGE ═══ -->
+  <div class="content" id="pg-templates" style="display:none">
+    <div class="card">
+      <div class="card-title"><span>📦</span> Templates disponíveis</div>
+      <div class="card-desc">Templates base que podem ser personalizados para cada cliente</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="card" style="cursor:pointer;" onclick="document.getElementById('cTemplate').value='nutri';document.getElementById('cType').value='nutri';showPage('generator');toast('Template nutricionista carregado');">
+        <div class="card-title"><span>🥗</span> Nutricionista</div>
+        <div class="card-desc">Quiz de diagnóstico nutricional + painel com plano alimentar, evolução de peso e financeiro. 7 perguntas sobre alimentação, hidratação, sono e objetivo.</div>
+      </div>
+      <div class="card" style="cursor:pointer;" onclick="document.getElementById('cTemplate').value='personal';document.getElementById('cType').value='personal';showPage('generator');toast('Template personal carregado');">
+        <div class="card-title"><span>💪</span> Personal Trainer</div>
+        <div class="card-desc">Quiz de avaliação fitness + painel com evolução de treino, medidas corporais e financeiro. 7 perguntas sobre atividade física, objetivos e rotina.</div>
+      </div>
+      <div class="card" style="cursor:pointer;" onclick="document.getElementById('cTemplate').value='psi';document.getElementById('cType').value='psi';showPage('generator');toast('Template psicólogo carregado');">
+        <div class="card-title"><span>🧠</span> Psicólogo</div>
+        <div class="card-desc">Quiz de saúde emocional + painel com acompanhamento de sessões e financeiro. 8 perguntas sobre ansiedade, humor, sono e relacionamentos.</div>
+      </div>
+      <div class="card" style="cursor:pointer;" onclick="document.getElementById('cTemplate').value='fisio';document.getElementById('cType').value='fisio';showPage('generator');toast('Template fisio carregado');">
+        <div class="card-title"><span>🦴</span> Fisioterapeuta</div>
+        <div class="card-desc">Quiz de avaliação postural + painel com evolução de tratamento e financeiro. 7 perguntas sobre dores, mobilidade e hábitos posturais.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- Code Modal -->
+<div class="code-modal" id="codeModal" onclick="if(event.target===this)closeCode()">
+  <div class="code-box">
+    <div class="code-box-header">
+      <h3 id="codeTitle">Código gerado</h3>
+      <button class="code-box-close" onclick="closeCode()">✕</button>
+    </div>
+    <div class="code-box-body">
+      <div class="code-block" id="codeContent"></div>
+    </div>
+    <div class="code-box-footer">
+      <button class="btn btn-primary" onclick="copyCode()">📋 Copiar código</button>
+      <button class="btn btn-secondary" onclick="downloadCode()">⬇️ Baixar HTML</button>
+      <button class="btn btn-secondary" onclick="closeCode()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══ NAVIGATION ═══
+function showPage(pg) {
+  document.querySelectorAll('.content').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('pg-' + pg).style.display = 'block';
+  const idx = { generator: 0, clients: 1, templates: 2 }[pg];
+  document.querySelectorAll('.nav-item')[idx].classList.add('active');
+  const titles = { generator: ['Kit de Personalização', 'Gere o produto completo para cada cliente em minutos'], clients: ['Clientes', 'Todos os clientes cadastrados'], templates: ['Templates', 'Escolha um template base para começar'] };
+  document.getElementById('pageTitle').textContent = titles[pg][0];
+  document.getElementById('pageSub').textContent = titles[pg][1];
+  if (pg === 'clients') renderClients();
+}
+
+// ═══ LIVE UPDATE ═══
+function liveUpdate() {
+  const sub = document.getElementById('cSubdomain').value.toLowerCase().replace(/[^a-z0-9]/g, '') || 'cliente';
+  document.getElementById('subdomainPreview').textContent = '→ ' + sub + '.vvisolucoes.com.br';
+}
+
+// ═══ CLIENTS ═══
+function getClients() { try { return JSON.parse(localStorage.getItem('vvi_clients') || '[]'); } catch { return []; } }
+function saveClients(arr) { localStorage.setItem('vvi_clients', JSON.stringify(arr)); }
+
+function saveClient() {
+  const name = document.getElementById('cName').value.trim();
+  if (!name) { alert('Preencha pelo menos o nome do cliente.'); return; }
+
+  const client = {
+    id: Date.now().toString(36),
+    name,
+    type: document.getElementById('cType').value,
+    reg: document.getElementById('cReg').value,
+    whatsapp: document.getElementById('cWhatsApp').value.replace(/\D/g, ''),
+    waMsg: document.getElementById('cWAMsg').value,
+    color1: document.getElementById('cColor1Hex').value,
+    color2: document.getElementById('cColor2Hex').value,
+    color3: document.getElementById('cColor3Hex').value,
+    subdomain: document.getElementById('cSubdomain').value.toLowerCase().replace(/[^a-z0-9]/g, ''),
+    quizTitle: document.getElementById('cQuizTitle').value,
+    template: document.getElementById('cTemplate').value,
+    questions: document.getElementById('cQuestions').value,
+    createdAt: new Date().toISOString(),
+    status: 'pending'
+  };
+
+  const clients = getClients();
+  clients.push(client);
+  saveClients(clients);
+  toast('Cliente salvo com sucesso!');
+}
+
+function renderClients() {
+  const clients = getClients();
+  const el = document.getElementById('clientsList');
+  if (!clients.length) {
+    el.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text3);"><div style="font-size:48px;margin-bottom:12px;">👥</div><h3 style="color:var(--text);margin-bottom:6px;">Nenhum cliente ainda</h3><p style="font-size:13px;">Salve seu primeiro cliente na aba Personalizar</p></div>';
+    return;
+  }
+
+  const TYPES = { nutri: 'Nutricionista', personal: 'Personal Trainer', psi: 'Psicólogo(a)', fisio: 'Fisioterapeuta', outro: 'Outro' };
+  const COLORS = ['#2D9D78', '#4A8FD6', '#E5A832', '#E06B5E', '#8B7EC8', '#D47FA6'];
+  const STATUS = { active: ['Ativo', 'cs-active'], pending: ['Pendente', 'cs-pending'], inactive: ['Inativo', 'cs-inactive'] };
+
+  el.innerHTML = '<div class="clients-list">' + clients.map((c, i) => {
+    const ini = c.name.split(' ').map(w => w[0]).join('').slice(0, 2);
+    const [sLabel, sClass] = STATUS[c.status] || STATUS.pending;
+    return `<div class="client-card" onclick="loadClient('${c.id}')">
+      <div class="client-avatar" style="background:${c.color1 || COLORS[i % 6]}">${ini}</div>
+      <div class="client-info">
+        <div class="client-name">${c.name}</div>
+        <div class="client-meta">${TYPES[c.type] || c.type} · ${c.subdomain || '—'}.vvisolucoes.com.br · ${new Date(c.createdAt).toLocaleDateString('pt-BR')}</div>
+      </div>
+      <span class="client-status ${sClass}">${sLabel}</span>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function loadClient(id) {
+  const clients = getClients();
+  const c = clients.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('cName').value = c.name;
+  document.getElementById('cType').value = c.type;
+  document.getElementById('cReg').value = c.reg || '';
+  document.getElementById('cWhatsApp').value = c.whatsapp || '';
+  document.getElementById('cWAMsg').value = c.waMsg || '';
+  document.getElementById('cColor1').value = c.color1 || '#2D9D78';
+  document.getElementById('cColor1Hex').value = c.color1 || '#2D9D78';
+  document.getElementById('cColor2').value = c.color2 || '#E6F7F0';
+  document.getElementById('cColor2Hex').value = c.color2 || '#E6F7F0';
+  document.getElementById('cColor3').value = c.color3 || '#C4704B';
+  document.getElementById('cColor3Hex').value = c.color3 || '#C4704B';
+  document.getElementById('cSubdomain').value = c.subdomain || '';
+  document.getElementById('cQuizTitle').value = c.quizTitle || '';
+  document.getElementById('cTemplate').value = c.template || 'nutri';
+  document.getElementById('cQuestions').value = c.questions || '7';
+  liveUpdate();
+  showPage('generator');
+  toast('Cliente carregado: ' + c.name);
+}
+
+// ═══ GENERATE ═══
+function getConfig() {
+  return {
+    name: document.getElementById('cName').value.trim() || 'Profissional',
+    type: document.getElementById('cType').value,
+    reg: document.getElementById('cReg').value,
+    whatsapp: document.getElementById('cWhatsApp').value.replace(/\D/g, ''),
+    waMsg: document.getElementById('cWAMsg').value || 'Olá! Gostaria de agendar uma consulta.',
+    color1: document.getElementById('cColor1Hex').value,
+    color2: document.getElementById('cColor2Hex').value,
+    color3: document.getElementById('cColor3Hex').value,
+    subdomain: document.getElementById('cSubdomain').value,
+    quizTitle: document.getElementById('cQuizTitle').value,
+    template: document.getElementById('cTemplate').value,
+  };
+}
+
+function generateAll() {
+  const cfg = getConfig();
+  if (!cfg.name || cfg.name === 'Profissional') { alert('Preencha o nome do cliente antes de gerar.'); return; }
+
+  const configJSON = JSON.stringify(cfg, null, 2);
+
+  const instructions = `═══════════════════════════════════════════
+  CONFIGURAÇÃO DO CLIENTE — ${cfg.name}
+═══════════════════════════════════════════
+
+${configJSON}
+
+═══════════════════════════════════════════
+  INSTRUÇÕES DE DEPLOY
+═══════════════════════════════════════════
+
+1. QUIZ DE CAPTAÇÃO
+   - Abrir o template "${cfg.template}" base
+   - Substituir variáveis de configuração:
+     • config.name = "${cfg.name}"
+     • config.title = "${cfg.reg}"
+     • config.whatsapp = "${cfg.whatsapp}"
+     • config.waMsg = "${cfg.waMsg}"
+     • config.color (--sage) = "${cfg.color1}"
+   - Salvar como index.html
+
+2. FORMULÁRIO DO PACIENTE
+   - Abrir formulario-paciente.html base
+   - Atualizar nome e cores
+   - Salvar na mesma pasta
+
+3. PAINEL DO NUTRICIONISTA
+   - Abrir painel-nutricionista.html base
+   - Atualizar cores e branding
+   - Salvar como painel.html
+
+4. DEPLOY
+   - Criar repositório: ${cfg.subdomain || 'cliente'}
+   - Upload dos 3 arquivos
+   - Ativar Netlify/Vercel
+   - Configurar subdomínio: ${cfg.subdomain || 'cliente'}.vvisolucoes.com.br
+   - Testar todos os links de WhatsApp
+
+5. ENTREGA AO CLIENTE
+   - Enviar link do quiz: ${cfg.subdomain || 'cliente'}.vvisolucoes.com.br
+   - Enviar link do painel: ${cfg.subdomain || 'cliente'}.vvisolucoes.com.br/painel
+   - Orientar a trocar o link da bio
+
+═══════════════════════════════════════════
+  CHECKLIST DE QUALIDADE
+═══════════════════════════════════════════
+
+[ ] Quiz funciona no celular
+[ ] Cores estão corretas
+[ ] Nome e CRN/CRP/CREF aparecem corretamente
+[ ] Botão WhatsApp abre com mensagem certa
+[ ] Formulário salva dados no localStorage
+[ ] Painel mostra dados do formulário
+[ ] Plano alimentar funciona
+[ ] Financeiro funciona
+[ ] Domínio ativo e com HTTPS`;
+
+  document.getElementById('codeTitle').textContent = '📦 Pacote gerado — ' + cfg.name;
+  document.getElementById('codeContent').textContent = instructions;
+  document.getElementById('codeModal').classList.add('open');
+
+  // Auto-save client
+  saveClient();
+}
+
+function previewQuiz() {
+  toast('Para preview completo, use os templates na aba Templates e abra os arquivos HTML gerados anteriormente.');
+}
+
+// ═══ CODE MODAL ═══
+function closeCode() { document.getElementById('codeModal').classList.remove('open'); }
+
+function copyCode() {
+  const text = document.getElementById('codeContent').textContent;
+  navigator.clipboard.writeText(text);
+  toast('Copiado!');
+}
+
+function downloadCode() {
+  const cfg = getConfig();
+  const text = document.getElementById('codeContent').textContent;
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (cfg.subdomain || 'cliente') + '-config.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Arquivo baixado!');
+}
+
+// ═══ TOAST ═══
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
