@@ -3,522 +3,724 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VVI Admin — Kit de Personalização Rápida</title>
+<title>VVI Admin — Gerador de Produtos</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#0F1117;--bg2:#161821;--bg3:#1E2030;--bg4:#282A3A;
-  --em:#00D4AA;--em2:#00F0C0;--emG:rgba(0,212,170,0.1);
-  --text:#E0E1E6;--text2:#8B8FA0;--text3:#555868;
-  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
-  --red:#F87171;--amber:#F59E0B;--blue:#60A5FA;--purple:#A78BFA;
-  --w:#FFFFFF;--r:14px;--rs:10px;
-}
+:root{--bg:#0F1117;--bg2:#161821;--bg3:#1E2030;--bg4:#282A3A;--em:#00D4AA;--em2:#00F0C0;--emG:rgba(0,212,170,0.1);--text:#E0E1E6;--text2:#8B8FA0;--text3:#555868;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);--red:#F87171;--amber:#F59E0B;--blue:#60A5FA;--purple:#A78BFA;--w:#FFFFFF;--r:14px;--rs:10px;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-
-/* layout */
 .app{display:flex;min-height:100vh;}
-.sidebar{width:240px;background:var(--bg2);border-right:1px solid var(--border);padding:24px 16px;flex-shrink:0;display:flex;flex-direction:column;}
+.sidebar{width:240px;background:var(--bg2);border-right:1px solid var(--border);padding:24px 16px;flex-shrink:0;}
 .main{flex:1;overflow-y:auto;}
-
 .sidebar-logo{display:flex;align-items:center;gap:10px;margin-bottom:32px;}
 .sidebar-logo-mark{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--em),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:var(--bg);}
 .sidebar-logo-text{font-weight:800;font-size:16px;color:var(--text);}
 .sidebar-logo-text em{font-style:normal;color:var(--em);}
-
 .nav-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:10px;padding:0 8px;}
-.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rs);cursor:pointer;color:var(--text2);font-size:13px;font-weight:600;border:none;background:none;width:100%;text-align:left;font-family:inherit;transition:all 0.15s;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rs);cursor:pointer;color:var(--text2);font-size:13px;font-weight:600;border:none;background:none;width:100%;text-align:left;font-family:inherit;transition:all 0.15s;margin-bottom:2px;}
 .nav-item:hover{background:rgba(255,255,255,0.04);color:var(--text);}
 .nav-item.active{background:var(--emG);color:var(--em);}
 .nav-item span{font-size:18px;width:24px;text-align:center;}
-
 .topbar{padding:20px 32px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
 .topbar h1{font-size:22px;font-weight:800;color:var(--w);}
 .topbar-sub{font-size:13px;color:var(--text2);margin-top:2px;}
-
-.content{padding:28px 32px;max-width:900px;}
-
-/* form */
+.content{padding:28px 32px;max-width:960px;}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin-bottom:20px;}
 .card-title{font-size:16px;font-weight:700;color:var(--w);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
 .card-title span{font-size:20px;}
 .card-desc{font-size:13px;color:var(--text2);margin-bottom:20px;}
-
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
 .form-row.single{grid-template-columns:1fr;}
 .form-row.triple{grid-template-columns:1fr 1fr 1fr;}
-
 .fg label{display:block;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
-.fg input,.fg select,.fg textarea{
-  width:100%;height:44px;border-radius:var(--rs);border:1.5px solid var(--border2);
-  padding:0 14px;font-family:inherit;font-size:14px;color:var(--text);
-  background:var(--bg3);outline:none;transition:border-color 0.2s;
-}
-.fg textarea{height:90px;padding:12px 14px;resize:vertical;}
+.fg input,.fg select,.fg textarea{width:100%;height:44px;border-radius:var(--rs);border:1.5px solid var(--border2);padding:0 14px;font-family:inherit;font-size:14px;color:var(--text);background:var(--bg3);outline:none;transition:border-color 0.2s;}
+.fg textarea{height:80px;padding:12px 14px;resize:vertical;}
 .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--em);}
 .fg input::placeholder{color:var(--text3);}
 .fg .hint{font-size:11px;color:var(--text3);margin-top:4px;}
-
 .color-row{display:flex;gap:12px;align-items:center;}
 .color-preview{width:44px;height:44px;border-radius:var(--rs);border:2px solid var(--border2);cursor:pointer;flex-shrink:0;}
 .color-input{flex:1;}
 
-/* preview section */
-.preview-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.preview-tabs{display:flex;gap:6px;}
-.preview-tab{padding:8px 16px;border-radius:50px;border:1.5px solid var(--border2);background:none;color:var(--text2);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s;}
-.preview-tab.active{background:var(--emG);border-color:var(--em);color:var(--em);}
-.preview-frame{width:100%;height:600px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg3);overflow:hidden;}
-.preview-frame iframe{width:100%;height:100%;border:none;}
-
-/* actions */
-.actions{display:flex;gap:12px;margin-top:24px;}
-.btn{padding:14px 28px;border-radius:var(--rs);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;border:none;}
+/* generated files area */
+.gen-results{display:none;margin-top:24px;}
+.gen-results.show{display:block;}
+.gen-file{display:flex;align-items:center;gap:14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:16px 20px;margin-bottom:10px;transition:all 0.15s;}
+.gen-file:hover{border-color:var(--border2);}
+.gen-file-icon{font-size:28px;flex-shrink:0;}
+.gen-file-info{flex:1;}
+.gen-file-name{font-size:14px;font-weight:700;color:var(--w);}
+.gen-file-desc{font-size:12px;color:var(--text3);margin-top:2px;}
+.gen-file-actions{display:flex;gap:8px;}
+.btn{padding:10px 20px;border-radius:var(--rs);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;border:none;}
+.btn-sm{padding:8px 16px;font-size:12px;}
 .btn-primary{background:var(--em);color:var(--bg);}
 .btn-primary:hover{background:var(--em2);}
 .btn-secondary{background:var(--bg4);color:var(--text);border:1.5px solid var(--border2);}
 .btn-secondary:hover{border-color:var(--em);color:var(--em);}
-.btn-danger{background:rgba(248,113,113,0.1);color:var(--red);border:1.5px solid rgba(248,113,113,0.2);}
+.btn-big{padding:16px 32px;font-size:15px;width:100%;}
+.btn-group{display:flex;gap:12px;margin-top:20px;}
 
-/* clients list */
-.clients-list{display:flex;flex-direction:column;gap:10px;}
-.client-card{display:flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;cursor:pointer;transition:all 0.15s;}
+/* clients */
+.client-card{display:flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;cursor:pointer;transition:all 0.15s;margin-bottom:10px;}
 .client-card:hover{border-color:var(--border2);background:var(--bg3);}
 .client-avatar{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--w);flex-shrink:0;}
 .client-info{flex:1;min-width:0;}
-.client-name{font-size:15px;font-weight:700;color:var(--w);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.client-name{font-size:15px;font-weight:700;color:var(--w);}
 .client-meta{font-size:12px;color:var(--text3);margin-top:2px;}
-.client-status{padding:4px 12px;border-radius:50px;font-size:11px;font-weight:700;}
-.cs-active{background:var(--emG);color:var(--em);}
-.cs-pending{background:rgba(245,158,11,0.1);color:var(--amber);}
-.cs-inactive{background:rgba(248,113,113,0.1);color:var(--red);}
+.client-actions{display:flex;gap:6px;}
 
-/* generated code modal */
-.code-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);z-index:500;align-items:center;justify-content:center;padding:20px;}
-.code-modal.open{display:flex;}
-.code-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:700px;max-height:80vh;overflow:hidden;display:flex;flex-direction:column;}
-.code-box-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.code-box-header h3{font-size:16px;font-weight:700;color:var(--w);}
-.code-box-close{width:32px;height:32px;border-radius:8px;border:none;background:var(--bg4);cursor:pointer;font-size:16px;color:var(--text2);display:flex;align-items:center;justify-content:center;}
-.code-box-body{padding:20px 24px;overflow-y:auto;flex:1;}
-.code-block{background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);padding:16px;font-family:'Courier New',monospace;font-size:12px;color:var(--em);line-height:1.6;white-space:pre-wrap;word-break:break-all;max-height:400px;overflow-y:auto;}
-.code-box-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;}
+/* progress */
+.progress-bar{width:100%;height:6px;background:var(--bg4);border-radius:6px;margin:16px 0;overflow:hidden;}
+.progress-fill{height:100%;background:var(--em);border-radius:6px;transition:width 0.5s ease;width:0;}
+.progress-text{font-size:12px;color:var(--em);font-weight:600;margin-bottom:8px;}
 
-/* toast */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--em);color:var(--bg);padding:14px 24px;border-radius:var(--rs);font-size:14px;font-weight:700;z-index:600;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none;}
 .toast.show{opacity:1;transform:translateY(0);}
 
-@media(max-width:768px){
-  .sidebar{display:none;}.form-row{grid-template-columns:1fr;}
-  .form-row.triple{grid-template-columns:1fr;}.content{padding:20px 16px;}
-  .topbar{padding:16px;}
-}
+@media(max-width:768px){.sidebar{display:none;}.form-row,.form-row.triple{grid-template-columns:1fr;}.content{padding:20px 16px;}.topbar{padding:16px;}}
 </style>
 </head>
 <body>
 <div class="app">
-
-<!-- Sidebar -->
 <div class="sidebar">
   <div class="sidebar-logo"><div class="sidebar-logo-mark">VVI</div><div class="sidebar-logo-text">VVI <em>Admin</em></div></div>
   <div class="nav-label">Ferramentas</div>
-  <button class="nav-item active" onclick="showPage('generator')"><span>🎨</span> Personalizar</button>
+  <button class="nav-item active" onclick="showPage('gen')"><span>⚡</span> Gerar Produto</button>
   <button class="nav-item" onclick="showPage('clients')"><span>👥</span> Clientes</button>
-  <button class="nav-item" onclick="showPage('templates')"><span>📦</span> Templates</button>
 </div>
 
-<!-- Main -->
 <div class="main">
   <div class="topbar">
     <div>
-      <h1 id="pageTitle">Kit de Personalização</h1>
-      <div class="topbar-sub" id="pageSub">Gere o produto completo para cada cliente em minutos</div>
+      <h1 id="pageTitle">Gerar Produto</h1>
+      <div class="topbar-sub" id="pageSub">Preencha os dados e baixe os 3 arquivos prontos</div>
     </div>
   </div>
 
-  <!-- ═══ GENERATOR PAGE ═══ -->
-  <div class="content" id="pg-generator">
-
-    <!-- Client Info -->
+  <!-- ═══ GENERATOR ═══ -->
+  <div class="content" id="pg-gen">
     <div class="card">
       <div class="card-title"><span>👤</span> Dados do Cliente</div>
-      <div class="card-desc">Informações básicas do profissional</div>
+      <div class="card-desc">Informações que aparecerão em todas as ferramentas</div>
       <div class="form-row">
-        <div class="fg"><label>Nome completo</label><input type="text" id="cName" placeholder="Dra. Ana Souza" oninput="liveUpdate()"/></div>
-        <div class="fg"><label>Especialidade</label>
-          <select id="cType" onchange="liveUpdate()">
+        <div class="fg"><label>Nome completo</label><input type="text" id="cName" placeholder="Dra. Ana Souza"/></div>
+        <div class="fg"><label>Especialidade / Registro</label><input type="text" id="cReg" placeholder="Nutricionista Clínica — CRN 12345"/></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>WhatsApp (só números com DDD)</label><input type="tel" id="cWA" placeholder="11999998888"/></div>
+        <div class="fg"><label>Nicho</label>
+          <select id="cNicho">
             <option value="nutri">Nutricionista</option>
             <option value="personal">Personal Trainer</option>
             <option value="psi">Psicólogo(a)</option>
-            <option value="fisio">Fisioterapeuta</option>
-            <option value="outro">Outro</option>
           </select>
         </div>
-      </div>
-      <div class="form-row">
-        <div class="fg"><label>CRP / CRN / CREF</label><input type="text" id="cReg" placeholder="CRN 12345" oninput="liveUpdate()"/></div>
-        <div class="fg"><label>WhatsApp (com DDD)</label><input type="tel" id="cWhatsApp" placeholder="11999998888" oninput="liveUpdate()"/></div>
       </div>
       <div class="form-row single">
-        <div class="fg">
-          <label>Mensagem do WhatsApp</label>
-          <textarea id="cWAMsg" placeholder="Olá! Fiz a avaliação e gostaria de agendar uma consulta." oninput="liveUpdate()"></textarea>
-          <div class="hint">Essa é a mensagem que o lead envia automaticamente ao clicar no botão do WhatsApp</div>
-        </div>
+        <div class="fg"><label>Mensagem automática do WhatsApp</label><textarea id="cMsg" placeholder="Olá! Fiz a avaliação e gostaria de agendar uma consulta."></textarea></div>
       </div>
     </div>
 
-    <!-- Visual Identity -->
     <div class="card">
-      <div class="card-title"><span>🎨</span> Identidade Visual</div>
-      <div class="card-desc">Cores e estilo do produto</div>
+      <div class="card-title"><span>🎨</span> Cores</div>
+      <div class="card-desc">A cor principal será aplicada em botões, destaques e elementos visuais</div>
       <div class="form-row triple">
-        <div class="fg">
-          <label>Cor principal</label>
-          <div class="color-row">
-            <input type="color" id="cColor1" value="#2D9D78" class="color-preview" onchange="document.getElementById('cColor1Hex').value=this.value;liveUpdate()"/>
-            <input type="text" id="cColor1Hex" value="#2D9D78" class="color-input" oninput="document.getElementById('cColor1').value=this.value;liveUpdate()"/>
-          </div>
-        </div>
-        <div class="fg">
-          <label>Cor secundária</label>
-          <div class="color-row">
-            <input type="color" id="cColor2" value="#E6F7F0" class="color-preview" onchange="document.getElementById('cColor2Hex').value=this.value;liveUpdate()"/>
-            <input type="text" id="cColor2Hex" value="#E6F7F0" class="color-input" oninput="document.getElementById('cColor2').value=this.value;liveUpdate()"/>
-          </div>
-        </div>
-        <div class="fg">
-          <label>Cor de destaque</label>
-          <div class="color-row">
-            <input type="color" id="cColor3" value="#C4704B" class="color-preview" onchange="document.getElementById('cColor3Hex').value=this.value;liveUpdate()"/>
-            <input type="text" id="cColor3Hex" value="#C4704B" class="color-input" oninput="document.getElementById('cColor3').value=this.value;liveUpdate()"/>
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="fg">
-          <label>Subdomínio</label>
-          <input type="text" id="cSubdomain" placeholder="draana" oninput="liveUpdate()"/>
-          <div class="hint" id="subdomainPreview">→ draana.vvisolucoes.com.br</div>
-        </div>
-        <div class="fg">
-          <label>Título do Quiz</label>
-          <input type="text" id="cQuizTitle" placeholder="Descubra como está sua saúde nutricional" oninput="liveUpdate()"/>
-        </div>
+        <div class="fg"><label>Cor principal</label><div class="color-row"><input type="color" id="c1" value="#2D9D78" class="color-preview" onchange="document.getElementById('c1h').value=this.value"/><input type="text" id="c1h" value="#2D9D78" class="color-input" oninput="document.getElementById('c1').value=this.value"/></div></div>
+        <div class="fg"><label>Cor de destaque (CTA)</label><div class="color-row"><input type="color" id="c2" value="#C4704B" class="color-preview" onchange="document.getElementById('c2h').value=this.value"/><input type="text" id="c2h" value="#C4704B" class="color-input" oninput="document.getElementById('c2').value=this.value"/></div></div>
+        <div class="fg"><label>Cor de fundo clara</label><div class="color-row"><input type="color" id="c3" value="#FDFBF8" class="color-preview" onchange="document.getElementById('c3h').value=this.value"/><input type="text" id="c3h" value="#FDFBF8" class="color-input" oninput="document.getElementById('c3').value=this.value"/></div></div>
       </div>
     </div>
 
-    <!-- Quiz customization -->
-    <div class="card">
-      <div class="card-title"><span>🧠</span> Configuração do Quiz</div>
-      <div class="card-desc">Número de perguntas e template base</div>
-      <div class="form-row">
-        <div class="fg">
-          <label>Template base</label>
-          <select id="cTemplate" onchange="liveUpdate()">
-            <option value="nutri">Nutricionista — Diagnóstico nutricional</option>
-            <option value="personal">Personal — Avaliação fitness</option>
-            <option value="psi">Psicólogo — Saúde emocional</option>
-            <option value="fisio">Fisioterapeuta — Avaliação postural</option>
-          </select>
+    <button class="btn btn-primary btn-big" onclick="generateAll()">⚡ Gerar os 3 arquivos personalizados</button>
+
+    <!-- Results -->
+    <div class="gen-results" id="genResults">
+      <div class="progress-text" id="progressText"></div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+      <div class="gen-file">
+        <div class="gen-file-icon">🧠</div>
+        <div class="gen-file-info">
+          <div class="gen-file-name">index.html</div>
+          <div class="gen-file-desc">Quiz de captação — vai na raiz do repositório (link da bio)</div>
         </div>
-        <div class="fg">
-          <label>Nº de perguntas</label>
-          <select id="cQuestions">
-            <option value="5">5 perguntas (~1 min)</option>
-            <option value="7" selected>7 perguntas (~2 min)</option>
-            <option value="10">10 perguntas (~3 min)</option>
-          </select>
+        <div class="gen-file-actions">
+          <button class="btn btn-primary btn-sm" onclick="downloadFile('quiz')">⬇️ Baixar</button>
+          <button class="btn btn-secondary btn-sm" onclick="previewFile('quiz')">👁️ Preview</button>
         </div>
       </div>
-    </div>
 
-    <!-- Actions -->
-    <div class="actions">
-      <button class="btn btn-primary" onclick="generateAll()">⚡ Gerar produto completo</button>
-      <button class="btn btn-secondary" onclick="saveClient()">💾 Salvar cliente</button>
-      <button class="btn btn-secondary" onclick="previewQuiz()">👁️ Preview do quiz</button>
-    </div>
+      <div class="gen-file">
+        <div class="gen-file-icon">📋</div>
+        <div class="gen-file-info">
+          <div class="gen-file-name">cadastro.html</div>
+          <div class="gen-file-desc">Formulário do paciente — link enviado por WhatsApp</div>
+        </div>
+        <div class="gen-file-actions">
+          <button class="btn btn-primary btn-sm" onclick="downloadFile('form')">⬇️ Baixar</button>
+          <button class="btn btn-secondary btn-sm" onclick="previewFile('form')">👁️ Preview</button>
+        </div>
+      </div>
 
+      <div class="gen-file">
+        <div class="gen-file-icon">📊</div>
+        <div class="gen-file-info">
+          <div class="gen-file-name">painel.html</div>
+          <div class="gen-file-desc">Dashboard do profissional — link privado de gestão</div>
+        </div>
+        <div class="gen-file-actions">
+          <button class="btn btn-primary btn-sm" onclick="downloadFile('dash')">⬇️ Baixar</button>
+          <button class="btn btn-secondary btn-sm" onclick="previewFile('dash')">👁️ Preview</button>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="downloadAll()">📦 Baixar todos (3 arquivos)</button>
+        <button class="btn btn-secondary" onclick="saveClient()">💾 Salvar cliente</button>
+      </div>
+    </div>
   </div>
 
-  <!-- ═══ CLIENTS PAGE ═══ -->
+  <!-- ═══ CLIENTS ═══ -->
   <div class="content" id="pg-clients" style="display:none">
     <div id="clientsList"></div>
   </div>
-
-  <!-- ═══ TEMPLATES PAGE ═══ -->
-  <div class="content" id="pg-templates" style="display:none">
-    <div class="card">
-      <div class="card-title"><span>📦</span> Templates disponíveis</div>
-      <div class="card-desc">Templates base que podem ser personalizados para cada cliente</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div class="card" style="cursor:pointer;" onclick="document.getElementById('cTemplate').value='nutri';document.getElementById('cType').value='nutri';showPage('generator');toast('Template nutricionista carregado');">
-        <div class="card-title"><span>🥗</span> Nutricionista</div>
-        <div class="card-desc">Quiz de diagnóstico nutricional + painel com plano alimentar, evolução de peso e financeiro. 7 perguntas sobre alimentação, hidratação, sono e objetivo.</div>
-      </div>
-      <div class="card" style="cursor:pointer;" onclick="document.getElementById('cTemplate').value='personal';document.getElementById('cType').value='personal';showPage('generator');toast('Template personal carregado');">
-        <div class="card-title"><span>💪</span> Personal Trainer</div>
-        <div class="card-desc">Quiz de avaliação fitness + painel com evolução de treino, medidas corporais e financeiro. 7 perguntas sobre atividade física, objetivos e rotina.</div>
-      </div>
-      <div class="card" style="cursor:pointer;" onclick="document.getElementById('cTemplate').value='psi';document.getElementById('cType').value='psi';showPage('generator');toast('Template psicólogo carregado');">
-        <div class="card-title"><span>🧠</span> Psicólogo</div>
-        <div class="card-desc">Quiz de saúde emocional + painel com acompanhamento de sessões e financeiro. 8 perguntas sobre ansiedade, humor, sono e relacionamentos.</div>
-      </div>
-      <div class="card" style="cursor:pointer;" onclick="document.getElementById('cTemplate').value='fisio';document.getElementById('cType').value='fisio';showPage('generator');toast('Template fisio carregado');">
-        <div class="card-title"><span>🦴</span> Fisioterapeuta</div>
-        <div class="card-desc">Quiz de avaliação postural + painel com evolução de tratamento e financeiro. 7 perguntas sobre dores, mobilidade e hábitos posturais.</div>
-      </div>
-    </div>
-  </div>
-
 </div>
 </div>
 
-<!-- Code Modal -->
-<div class="code-modal" id="codeModal" onclick="if(event.target===this)closeCode()">
-  <div class="code-box">
-    <div class="code-box-header">
-      <h3 id="codeTitle">Código gerado</h3>
-      <button class="code-box-close" onclick="closeCode()">✕</button>
-    </div>
-    <div class="code-box-body">
-      <div class="code-block" id="codeContent"></div>
-    </div>
-    <div class="code-box-footer">
-      <button class="btn btn-primary" onclick="copyCode()">📋 Copiar código</button>
-      <button class="btn btn-secondary" onclick="downloadCode()">⬇️ Baixar HTML</button>
-      <button class="btn btn-secondary" onclick="closeCode()">Fechar</button>
-    </div>
-  </div>
-</div>
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══ NAVIGATION ═══
-function showPage(pg) {
-  document.querySelectorAll('.content').forEach(p => p.style.display = 'none');
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('pg-' + pg).style.display = 'block';
-  const idx = { generator: 0, clients: 1, templates: 2 }[pg];
-  document.querySelectorAll('.nav-item')[idx].classList.add('active');
-  const titles = { generator: ['Kit de Personalização', 'Gere o produto completo para cada cliente em minutos'], clients: ['Clientes', 'Todos os clientes cadastrados'], templates: ['Templates', 'Escolha um template base para começar'] };
-  document.getElementById('pageTitle').textContent = titles[pg][0];
-  document.getElementById('pageSub').textContent = titles[pg][1];
-  if (pg === 'clients') renderClients();
+// ═══ NAV ═══
+function showPage(pg){
+  document.getElementById('pg-gen').style.display = pg==='gen'?'block':'none';
+  document.getElementById('pg-clients').style.display = pg==='clients'?'block':'none';
+  document.querySelectorAll('.nav-item').forEach((n,i)=>{n.classList.toggle('active',i==={gen:0,clients:1}[pg]);});
+  document.getElementById('pageTitle').textContent = pg==='gen'?'Gerar Produto':'Clientes';
+  document.getElementById('pageSub').textContent = pg==='gen'?'Preencha os dados e baixe os 3 arquivos prontos':'Clientes cadastrados';
+  if(pg==='clients') renderClients();
 }
 
-// ═══ LIVE UPDATE ═══
-function liveUpdate() {
-  const sub = document.getElementById('cSubdomain').value.toLowerCase().replace(/[^a-z0-9]/g, '') || 'cliente';
-  document.getElementById('subdomainPreview').textContent = '→ ' + sub + '.vvisolucoes.com.br';
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+// ═══ CONFIG ═══
+function getCfg(){
+  return {
+    name: document.getElementById('cName').value.trim()||'Profissional',
+    reg: document.getElementById('cReg').value.trim()||'',
+    wa: document.getElementById('cWA').value.replace(/\D/g,'')||'5511999999999',
+    nicho: document.getElementById('cNicho').value,
+    msg: document.getElementById('cMsg').value||'Olá! Gostaria de agendar uma consulta.',
+    cor1: document.getElementById('c1h').value,
+    cor2: document.getElementById('c2h').value,
+    cor3: document.getElementById('c3h').value,
+  };
+}
+
+// ═══ STORED FILES ═══
+let generatedFiles = { quiz:'', form:'', dash:'' };
+
+// ═══ GENERATE ═══
+async function generateAll(){
+  const cfg = getCfg();
+  if(cfg.name==='Profissional'){alert('Preencha o nome do cliente.');return;}
+
+  const el = document.getElementById('genResults');
+  el.classList.add('show');
+  const pf = document.getElementById('progressFill');
+  const pt = document.getElementById('progressText');
+
+  pt.textContent = '🧠 Gerando quiz de captação...';
+  pf.style.width = '10%';
+  await delay(300);
+
+  generatedFiles.quiz = buildQuiz(cfg);
+  pf.style.width = '35%';
+  pt.textContent = '📋 Gerando formulário do paciente...';
+  await delay(300);
+
+  generatedFiles.form = buildForm(cfg);
+  pf.style.width = '65%';
+  pt.textContent = '📊 Gerando painel de gestão...';
+  await delay(300);
+
+  generatedFiles.dash = buildDash(cfg);
+  pf.style.width = '100%';
+  pt.textContent = '✅ 3 arquivos prontos para download!';
+
+  toast('Produto gerado para ' + cfg.name + '!');
+}
+
+function delay(ms){return new Promise(r=>setTimeout(r,ms));}
+
+// ═══ DOWNLOAD ═══
+function downloadFile(type){
+  const names = {quiz:'index.html', form:'cadastro.html', dash:'painel.html'};
+  const content = generatedFiles[type];
+  if(!content){alert('Gere os arquivos primeiro.');return;}
+  const blob = new Blob([content],{type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = names[type];
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast(names[type] + ' baixado!');
+}
+
+function downloadAll(){
+  downloadFile('quiz');
+  setTimeout(()=>downloadFile('form'),500);
+  setTimeout(()=>downloadFile('dash'),1000);
+}
+
+function previewFile(type){
+  const content = generatedFiles[type];
+  if(!content){alert('Gere os arquivos primeiro.');return;}
+  const w = window.open('','_blank');
+  w.document.write(content);
+  w.document.close();
 }
 
 // ═══ CLIENTS ═══
-function getClients() { try { return JSON.parse(localStorage.getItem('vvi_clients') || '[]'); } catch { return []; } }
-function saveClients(arr) { localStorage.setItem('vvi_clients', JSON.stringify(arr)); }
+function getClients(){try{return JSON.parse(localStorage.getItem('vvi_clients2')||'[]')}catch{return[];}}
+function saveClients(a){localStorage.setItem('vvi_clients2',JSON.stringify(a));}
 
-function saveClient() {
-  const name = document.getElementById('cName').value.trim();
-  if (!name) { alert('Preencha pelo menos o nome do cliente.'); return; }
-
-  const client = {
-    id: Date.now().toString(36),
-    name,
-    type: document.getElementById('cType').value,
-    reg: document.getElementById('cReg').value,
-    whatsapp: document.getElementById('cWhatsApp').value.replace(/\D/g, ''),
-    waMsg: document.getElementById('cWAMsg').value,
-    color1: document.getElementById('cColor1Hex').value,
-    color2: document.getElementById('cColor2Hex').value,
-    color3: document.getElementById('cColor3Hex').value,
-    subdomain: document.getElementById('cSubdomain').value.toLowerCase().replace(/[^a-z0-9]/g, ''),
-    quizTitle: document.getElementById('cQuizTitle').value,
-    template: document.getElementById('cTemplate').value,
-    questions: document.getElementById('cQuestions').value,
-    createdAt: new Date().toISOString(),
-    status: 'pending'
-  };
-
-  const clients = getClients();
-  clients.push(client);
+function saveClient(){
+  const cfg=getCfg();
+  const clients=getClients();
+  clients.push({...cfg, id:Date.now().toString(36), createdAt:new Date().toISOString()});
   saveClients(clients);
-  toast('Cliente salvo com sucesso!');
+  toast('Cliente salvo!');
 }
 
-function renderClients() {
-  const clients = getClients();
-  const el = document.getElementById('clientsList');
-  if (!clients.length) {
-    el.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text3);"><div style="font-size:48px;margin-bottom:12px;">👥</div><h3 style="color:var(--text);margin-bottom:6px;">Nenhum cliente ainda</h3><p style="font-size:13px;">Salve seu primeiro cliente na aba Personalizar</p></div>';
-    return;
-  }
-
-  const TYPES = { nutri: 'Nutricionista', personal: 'Personal Trainer', psi: 'Psicólogo(a)', fisio: 'Fisioterapeuta', outro: 'Outro' };
-  const COLORS = ['#2D9D78', '#4A8FD6', '#E5A832', '#E06B5E', '#8B7EC8', '#D47FA6'];
-  const STATUS = { active: ['Ativo', 'cs-active'], pending: ['Pendente', 'cs-pending'], inactive: ['Inativo', 'cs-inactive'] };
-
-  el.innerHTML = '<div class="clients-list">' + clients.map((c, i) => {
-    const ini = c.name.split(' ').map(w => w[0]).join('').slice(0, 2);
-    const [sLabel, sClass] = STATUS[c.status] || STATUS.pending;
-    return `<div class="client-card" onclick="loadClient('${c.id}')">
-      <div class="client-avatar" style="background:${c.color1 || COLORS[i % 6]}">${ini}</div>
-      <div class="client-info">
-        <div class="client-name">${c.name}</div>
-        <div class="client-meta">${TYPES[c.type] || c.type} · ${c.subdomain || '—'}.vvisolucoes.com.br · ${new Date(c.createdAt).toLocaleDateString('pt-BR')}</div>
-      </div>
-      <span class="client-status ${sClass}">${sLabel}</span>
-    </div>`;
-  }).join('') + '</div>';
+function renderClients(){
+  const clients=getClients(), el=document.getElementById('clientsList');
+  if(!clients.length){el.innerHTML='<div style="text-align:center;padding:60px;color:var(--text3)"><div style="font-size:48px;margin-bottom:12px">👥</div><h3 style="color:var(--text);margin-bottom:6px">Nenhum cliente</h3><p style="font-size:13px">Gere seu primeiro produto na aba Gerar Produto</p></div>';return;}
+  const NICHOS={nutri:'Nutricionista',personal:'Personal Trainer',psi:'Psicólogo(a)'};
+  el.innerHTML = clients.map(c=>{
+    const ini=c.name.split(' ').map(w=>w[0]).join('').slice(0,2);
+    return `<div class="client-card" onclick="loadClient('${c.id}')"><div class="client-avatar" style="background:${c.cor1}">${ini}</div><div class="client-info"><div class="client-name">${c.name}</div><div class="client-meta">${NICHOS[c.nicho]||c.nicho} · ${c.reg} · ${new Date(c.createdAt).toLocaleDateString('pt-BR')}</div></div><div class="client-actions"><button class="btn btn-sm btn-secondary" onclick="event.stopPropagation();loadClient('${c.id}')">Editar</button></div></div>`;
+  }).join('');
 }
 
-function loadClient(id) {
-  const clients = getClients();
-  const c = clients.find(x => x.id === id);
-  if (!c) return;
-  document.getElementById('cName').value = c.name;
-  document.getElementById('cType').value = c.type;
-  document.getElementById('cReg').value = c.reg || '';
-  document.getElementById('cWhatsApp').value = c.whatsapp || '';
-  document.getElementById('cWAMsg').value = c.waMsg || '';
-  document.getElementById('cColor1').value = c.color1 || '#2D9D78';
-  document.getElementById('cColor1Hex').value = c.color1 || '#2D9D78';
-  document.getElementById('cColor2').value = c.color2 || '#E6F7F0';
-  document.getElementById('cColor2Hex').value = c.color2 || '#E6F7F0';
-  document.getElementById('cColor3').value = c.color3 || '#C4704B';
-  document.getElementById('cColor3Hex').value = c.color3 || '#C4704B';
-  document.getElementById('cSubdomain').value = c.subdomain || '';
-  document.getElementById('cQuizTitle').value = c.quizTitle || '';
-  document.getElementById('cTemplate').value = c.template || 'nutri';
-  document.getElementById('cQuestions').value = c.questions || '7';
-  liveUpdate();
-  showPage('generator');
-  toast('Cliente carregado: ' + c.name);
+function loadClient(id){
+  const c=getClients().find(x=>x.id===id);if(!c)return;
+  document.getElementById('cName').value=c.name;
+  document.getElementById('cReg').value=c.reg;
+  document.getElementById('cWA').value=c.wa;
+  document.getElementById('cNicho').value=c.nicho;
+  document.getElementById('cMsg').value=c.msg;
+  document.getElementById('c1').value=c.cor1;document.getElementById('c1h').value=c.cor1;
+  document.getElementById('c2').value=c.cor2;document.getElementById('c2h').value=c.cor2;
+  document.getElementById('c3').value=c.cor3;document.getElementById('c3h').value=c.cor3;
+  showPage('gen');
+  toast('Cliente carregado: '+c.name);
 }
 
-// ═══ GENERATE ═══
-function getConfig() {
-  return {
-    name: document.getElementById('cName').value.trim() || 'Profissional',
-    type: document.getElementById('cType').value,
-    reg: document.getElementById('cReg').value,
-    whatsapp: document.getElementById('cWhatsApp').value.replace(/\D/g, ''),
-    waMsg: document.getElementById('cWAMsg').value || 'Olá! Gostaria de agendar uma consulta.',
-    color1: document.getElementById('cColor1Hex').value,
-    color2: document.getElementById('cColor2Hex').value,
-    color3: document.getElementById('cColor3Hex').value,
-    subdomain: document.getElementById('cSubdomain').value,
-    quizTitle: document.getElementById('cQuizTitle').value,
-    template: document.getElementById('cTemplate').value,
+// ═══════════════════════════════════════════════════════
+// FILE BUILDERS — Each function returns a complete HTML
+// ═══════════════════════════════════════════════════════
+
+function buildQuiz(c) {
+  const nichoConfig = {
+    nutri: { emoji:'🥗', title: c.name ? `Descubra como está sua saúde nutricional` : 'Diagnóstico Nutricional', pageTitle:'Diagnóstico Nutricional',
+      questions: [
+        {emoji:'🍽️',title:'Quantas refeições você faz por dia?',options:[{t:'1 a 2',d:'Costumo pular',s:1},{t:'3 refeições',d:'Café, almoço e janta',s:2},{t:'4 a 5',d:'Incluo lanches',s:3},{t:'6 ou mais',d:'De 3 em 3 horas',s:4}]},
+        {emoji:'💧',title:'Quanta água você bebe por dia?',options:[{t:'Menos de 500ml',d:'Quase não bebo',s:1},{t:'500ml a 1L',d:'2-3 copos',s:2},{t:'1 a 2 litros',d:'Tento manter',s:3},{t:'Mais de 2L',d:'Sempre com garrafa',s:4}]},
+        {emoji:'🥬',title:'Com que frequência come frutas e verduras?',options:[{t:'Raramente',d:'Quase nunca',s:1},{t:'1-2x por semana',d:'De vez em quando',s:2},{t:'3-5x por semana',d:'Na maioria dos dias',s:3},{t:'Todos os dias',d:'Em todas as refeições',s:4}]},
+        {emoji:'🍟',title:'Com que frequência consome ultraprocessados?',options:[{t:'Todos os dias',d:'Faz parte da rotina',s:1},{t:'3-5x por semana',d:'Com frequência',s:2},{t:'1-2x por semana',d:'De vez em quando',s:3},{t:'Raramente',d:'Evito ao máximo',s:4}]},
+        {emoji:'😴',title:'Como está seu sono?',options:[{t:'Péssimo',d:'Menos de 5h',s:1},{t:'Irregular',d:'Horários bagunçados',s:2},{t:'Razoável',d:'6-7h',s:3},{t:'Ótimo',d:'7-8h, acordo bem',s:4}]},
+        {emoji:'🏃',title:'Pratica atividade física?',options:[{t:'Sedentário(a)',d:'Não pratico',s:1},{t:'1-2x por semana',d:'Tentando começar',s:2},{t:'3-4x por semana',d:'Tenho rotina',s:3},{t:'5+ vezes',d:'Treino é prioridade',s:4}]},
+        {emoji:'🎯',title:'Qual seu principal objetivo?',options:[{t:'Emagrecer',d:'Perder gordura',s:0},{t:'Ganhar massa',d:'Hipertrofia',s:0},{t:'Mais disposição',d:'Energia',s:0},{t:'Saúde',d:'Qualidade de vida',s:0}]}
+      ]},
+    personal: { emoji:'💪', title:'Descubra seu nível fitness', pageTitle:'Avaliação Fitness',
+      questions: [
+        {emoji:'🏋️',title:'Com que frequência você treina?',options:[{t:'Não treino',d:'Sou sedentário(a)',s:1},{t:'1-2x por semana',d:'Estou começando',s:2},{t:'3-4x por semana',d:'Tenho rotina',s:3},{t:'5+ vezes',d:'Treino é vida',s:4}]},
+        {emoji:'🍽️',title:'Como está sua alimentação?',options:[{t:'Descontrolada',d:'Como qualquer coisa',s:1},{t:'Irregular',d:'Às vezes cuido',s:2},{t:'Boa',d:'Tento comer bem',s:3},{t:'Excelente',d:'Dieta controlada',s:4}]},
+        {emoji:'💧',title:'Quanta água bebe por dia?',options:[{t:'Menos de 1L',d:'Quase não bebo',s:1},{t:'1 a 1.5L',d:'Poderia melhorar',s:2},{t:'1.5 a 2.5L',d:'Bom hábito',s:3},{t:'3L+',d:'Hidratação em dia',s:4}]},
+        {emoji:'😴',title:'Como está seu sono?',options:[{t:'Péssimo',d:'Menos de 5h',s:1},{t:'Irregular',d:'Horários bagunçados',s:2},{t:'Razoável',d:'6-7h',s:3},{t:'Ótimo',d:'7-8h, acordo bem',s:4}]},
+        {emoji:'🎯',title:'Qual seu principal objetivo?',options:[{t:'Emagrecer',d:'Perder gordura',s:0},{t:'Ganhar massa',d:'Hipertrofia',s:0},{t:'Condicionamento',d:'Resistência e fôlego',s:0},{t:'Saúde geral',d:'Qualidade de vida',s:0}]}
+      ]},
+    psi: { emoji:'🧠', title:'Como está sua saúde emocional?', pageTitle:'Avaliação Emocional',
+      questions: [
+        {emoji:'😰',title:'Com que frequência se sente ansioso(a)?',options:[{t:'Quase nunca',d:'Tranquilo(a)',s:4},{t:'Às vezes',d:'Situações específicas',s:3},{t:'Frequentemente',d:'Quase todo dia',s:2},{t:'Sempre',d:'Difícil controlar',s:1}]},
+        {emoji:'🎭',title:'Como está seu humor na maioria dos dias?',options:[{t:'Bem e motivado(a)',d:'Energia boa',s:4},{t:'Estável',d:'Altos e baixos normais',s:3},{t:'Desanimado(a)',d:'Sem motivação',s:2},{t:'Triste ou vazio(a)',d:'Na maior parte do tempo',s:1}]},
+        {emoji:'😴',title:'Como está a qualidade do seu sono?',options:[{t:'Ótima',d:'Durmo e acordo bem',s:4},{t:'Razoável',d:'Poderia melhorar',s:3},{t:'Ruim',d:'Dificuldade para dormir',s:2},{t:'Péssima',d:'Insônia frequente',s:1}]},
+        {emoji:'👥',title:'Como estão seus relacionamentos?',options:[{t:'Conectado(a)',d:'Me sinto acolhido(a)',s:4},{t:'Bons',d:'Conflitos normais',s:3},{t:'Distante',d:'Incompreendido(a)',s:2},{t:'Isolado(a)',d:'Conflito constante',s:1}]},
+        {emoji:'⚡',title:'Qual seu nível de estresse?',options:[{t:'Controlável',d:'Administro bem',s:4},{t:'Moderado',d:'Consigo lidar',s:3},{t:'Alto',d:'Sobrecarregado(a)',s:2},{t:'Muito alto',d:'No limite',s:1}]},
+        {emoji:'🎯',title:'O que mais te motivou a buscar ajuda?',options:[{t:'Ansiedade',d:'Preocupação excessiva',s:0},{t:'Relacionamentos',d:'Conflitos pessoais',s:0},{t:'Autoestima',d:'Me valorizar mais',s:0},{t:'Autoconhecimento',d:'Crescimento pessoal',s:0}]}
+      ]}
   };
+  const nc = nichoConfig[c.nicho] || nichoConfig.nutri;
+  const questionsJSON = JSON.stringify(nc.questions);
+
+return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>${nc.pageTitle} — ${c.name}</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--main:${c.cor1};--accent:${c.cor2};--bg:${c.cor3};--text:#3A3A3A;--textL:#6B6B6B;--white:#FFFFFF;--shadow:0 4px 16px rgba(0,0,0,0.08);}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;}
+.hero{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;}
+.hero h1{font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:#2D2D2D;margin-bottom:16px;line-height:1.15;}
+.hero h1 em{font-style:italic;color:var(--main);}
+.hero p{font-size:16px;color:var(--textL);line-height:1.6;max-width:320px;margin-bottom:36px;}
+.btn-start{background:var(--main);color:var(--white);border:none;border-radius:60px;padding:18px 48px;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,0.15);}
+.hero-footer{margin-top:20px;font-size:12px;color:var(--textL);}
+.hero-footer strong{color:var(--main);}
+.quiz{display:none;min-height:100dvh;}.quiz.active{display:block;}
+.progress-area{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.9);backdrop-filter:blur(16px);padding:16px 24px 12px;border-bottom:1px solid rgba(0,0,0,0.05);}
+.progress-header{display:flex;justify-content:space-between;margin-bottom:10px;}
+.progress-step{font-size:13px;font-weight:600;color:var(--main);}
+.progress-label{font-size:12px;color:var(--textL);}
+.progress-bar{width:100%;height:5px;background:#E0E0E0;border-radius:10px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--main);border-radius:10px;transition:width 0.5s;}
+.q-slide{display:none;padding:32px 24px 120px;animation:slideIn 0.4s ease;}.q-slide.active{display:block;}
+.q-emoji{font-size:40px;margin-bottom:16px;}
+.q-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#2D2D2D;margin-bottom:24px;line-height:1.25;}
+.opts{display:flex;flex-direction:column;gap:12px;}
+.opt{display:flex;align-items:center;gap:14px;background:var(--white);border:2px solid transparent;border-radius:12px;padding:16px 18px;cursor:pointer;transition:all 0.25s;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.opt:hover{border-color:var(--main);opacity:0.9;}
+.opt.selected{border-color:var(--main);background:rgba(0,0,0,0.02);}
+.opt-text{flex:1;}.opt-text strong{display:block;font-size:15px;color:#2D2D2D;margin-bottom:2px;}.opt-text span{font-size:13px;color:var(--textL);}
+.opt-check{width:24px;height:24px;border-radius:50%;border:2px solid #DDD;display:flex;align-items:center;justify-content:center;transition:all 0.25s;}
+.opt.selected .opt-check{border-color:var(--main);background:var(--main);}
+.opt.selected .opt-check::after{content:'✓';color:white;font-size:14px;}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;padding:16px 24px;padding-bottom:max(16px,env(safe-area-inset-bottom));background:rgba(255,255,255,0.95);backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,0.05);display:flex;gap:12px;z-index:100;}
+.btn-back{width:52px;height:52px;border-radius:14px;border:2px solid #E0E0E0;background:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;}
+.btn-next{flex:1;height:52px;border-radius:14px;border:none;background:var(--main);color:white;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;opacity:0.35;pointer-events:none;}
+.btn-next.enabled{opacity:1;pointer-events:auto;}
+.lead-slide{display:none;padding:32px 24px 120px;}.lead-slide.active{display:block;}
+.lead-card{background:white;border-radius:20px;padding:32px 24px;box-shadow:var(--shadow);text-align:center;}
+.lead-card h2{font-family:'Playfair Display',serif;font-size:22px;color:#2D2D2D;margin-bottom:8px;}
+.lead-card>p{font-size:14px;color:var(--textL);margin-bottom:28px;}
+.input-group{margin-bottom:14px;text-align:left;}
+.input-group label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.input-group input{width:100%;height:48px;border-radius:12px;border:2px solid #E0E0E0;padding:0 16px;font-family:inherit;font-size:15px;color:var(--text);outline:none;}
+.input-group input:focus{border-color:var(--main);}
+.btn-result{width:100%;height:52px;border-radius:14px;border:none;background:var(--accent);color:white;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;}
+.btn-result:disabled{opacity:0.35;}
+.result{display:none;min-height:100dvh;padding:32px 24px 40px;}.result.active{display:block;}
+.result h2{font-family:'Playfair Display',serif;font-size:28px;text-align:center;color:#2D2D2D;margin-bottom:24px;}
+.score-box{background:white;border-radius:16px;padding:28px;text-align:center;box-shadow:var(--shadow);margin-bottom:20px;}
+.score-big{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;color:var(--main);}
+.score-label{font-size:14px;color:var(--textL);margin-top:4px;}
+.tip-card{background:white;border-radius:14px;padding:20px;box-shadow:var(--shadow);margin-bottom:12px;}
+.tip-card strong{display:block;font-size:15px;color:#2D2D2D;margin-bottom:6px;}
+.tip-card p{font-size:14px;color:var(--textL);line-height:1.6;}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:56px;border-radius:14px;border:none;background:#25D366;color:white;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;margin-top:20px;box-shadow:0 8px 24px rgba(37,211,102,0.3);}
+.btn-share{width:100%;height:48px;border-radius:14px;border:2px solid #E0E0E0;background:white;color:var(--text);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-top:10px;}
+.powered{text-align:center;margin-top:24px;font-size:12px;color:var(--textL);}
+.powered strong{color:var(--main);}
+@keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@media(min-width:480px){.quiz,.result{max-width:480px;margin:0 auto;}.bottom-nav{max-width:480px;left:50%;transform:translateX(-50%);}}
+</style>
+</head>
+<body>
+<section class="hero" id="hero">
+  <div style="font-size:56px;margin-bottom:20px;">${nc.emoji}</div>
+  <h1>${nc.title.replace(/</g,'&lt;')}</h1>
+  <p>Responda algumas perguntas rápidas e receba um resultado personalizado com dicas práticas.</p>
+  <button class="btn-start" onclick="startQuiz()">Começar</button>
+  <p class="hero-footer">por <strong>${c.name}</strong>${c.reg?' · '+c.reg:''}</p>
+</section>
+
+<div class="quiz" id="quizContainer">
+  <div class="progress-area">
+    <div class="progress-header"><span class="progress-step" id="pStep">1 de ${nc.questions.length+1}</span><span class="progress-label" id="pLabel"></span></div>
+    <div class="progress-bar"><div class="progress-fill" id="pFill" style="width:0%"></div></div>
+  </div>
+  <div id="qArea"></div>
+  <div class="lead-slide" id="leadSlide">
+    <div class="lead-card">
+      <div style="font-size:48px;margin-bottom:20px;">🎉</div>
+      <h2>Resultado pronto!</h2>
+      <p>Preencha abaixo para ver seu resultado:</p>
+      <div class="input-group"><label>Seu nome</label><input type="text" id="leadName" placeholder="Como posso te chamar?" oninput="checkLead()"/></div>
+      <div class="input-group"><label>WhatsApp</label><input type="tel" id="leadPhone" placeholder="(00) 00000-0000" oninput="checkLead();fmtP(this)"/></div>
+      <button class="btn-result" id="btnResult" disabled onclick="showResult()">Ver meu resultado</button>
+    </div>
+  </div>
+  <div class="bottom-nav" id="bottomNav">
+    <button class="btn-back" onclick="prev()">←</button>
+    <button class="btn-next" id="btnNext" onclick="next()">Continuar</button>
+  </div>
+</div>
+
+<div class="result" id="resultContainer"></div>
+
+<script>
+const CONFIG = { name: ${JSON.stringify(c.name)}, reg: ${JSON.stringify(c.reg)}, wa: ${JSON.stringify(c.wa)}, msg: ${JSON.stringify(c.msg)} };
+const questions = ${questionsJSON};
+let cur=0, ans=[];
+
+function buildQ(){const a=document.getElementById('qArea');questions.forEach((q,qi)=>{const s=document.createElement('div');s.className='q-slide'+(qi===0?' active':'');s.id='q'+qi;s.innerHTML='<div class="q-emoji">'+q.emoji+'</div><div class="q-title">'+q.title+'</div><div class="opts">'+q.options.map((o,oi)=>'<div class="opt" data-q="'+qi+'" data-o="'+oi+'" onclick="pick('+qi+','+oi+')"><div class="opt-text"><strong>'+o.t+'</strong><span>'+o.d+'</span></div><div class="opt-check"></div></div>').join('')+'</div>';a.appendChild(s);});}
+
+function pick(qi,oi){ans[qi]=oi;document.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(c=>c.classList.remove('selected'));document.querySelector('.opt[data-q="'+qi+'"][data-o="'+oi+'"]').classList.add('selected');document.getElementById('btnNext').classList.add('enabled');}
+
+function upd(){const t=questions.length+1,c2=Math.min(cur+1,t);document.getElementById('pStep').textContent=c2+' de '+t;document.getElementById('pFill').style.width=((c2/t)*100)+'%';}
+
+function next(){if(cur<questions.length-1){document.getElementById('q'+cur).classList.remove('active');cur++;document.getElementById('q'+cur).classList.add('active');document.getElementById('btnNext').classList.toggle('enabled',ans[cur]!==undefined);upd();}else if(cur===questions.length-1){document.getElementById('q'+cur).classList.remove('active');cur=questions.length;document.getElementById('leadSlide').classList.add('active');document.getElementById('bottomNav').style.display='none';upd();}}
+
+function prev(){if(cur>0&&cur<questions.length){document.getElementById('q'+cur).classList.remove('active');cur--;document.getElementById('q'+cur).classList.add('active');document.getElementById('btnNext').classList.toggle('enabled',ans[cur]!==undefined);upd();}else if(cur===questions.length){document.getElementById('leadSlide').classList.remove('active');cur=questions.length-1;document.getElementById('q'+cur).classList.add('active');document.getElementById('bottomNav').style.display='flex';document.getElementById('btnNext').classList.add('enabled');upd();}}
+
+function startQuiz(){document.getElementById('hero').style.display='none';document.getElementById('quizContainer').classList.add('active');upd();}
+
+function fmtP(el){let v=el.value.replace(/\\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length>7)v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);else if(v.length>2)v='('+v.slice(0,2)+') '+v.slice(2);el.value=v;}
+function checkLead(){const n=document.getElementById('leadName').value.trim(),p=document.getElementById('leadPhone').value.replace(/\\D/g,'');document.getElementById('btnResult').disabled=!(n.length>=2&&p.length>=10);}
+
+function showResult(){
+  const name=document.getElementById('leadName').value.trim();
+  const phone=document.getElementById('leadPhone').value;
+  let total=0,max=0;
+  questions.forEach((q,i)=>{const s=q.options[ans[i]].s;if(s>0){total+=s;max+=4;}});
+  const pct=max?Math.round((total/max)*100):50;
+  const goal=questions[questions.length-1].options[ans[questions.length-1]||0].t;
+  let level=pct>=75?'Muito bom':pct>=50?'Pode melhorar':'Precisa de atenção';
+
+  document.getElementById('resultContainer').innerHTML=
+    '<h2>'+name.split(' ')[0]+', seu resultado:</h2>'+
+    '<div class="score-box"><div class="score-big">'+pct+'</div><div class="score-label">pontos de 100 · '+level+'</div></div>'+
+    '<div class="tip-card"><strong>🎯 Seu objetivo: '+goal+'</strong><p>Com acompanhamento profissional, seus resultados podem ser muito melhores. Vamos conversar?</p></div>'+
+    '<button class="btn-wa" onclick="openWA(\\''+name.replace(/'/g,"\\\\'")+'\\',' +pct+',\\''+level+'\\',' +'\\'' +goal+ '\\'' +')">Falar com '+CONFIG.name.split(' ')[0]+'</button>'+
+    '<button class="btn-share" onclick="shareR()">📤 Compartilhar resultado</button>'+
+    '<div class="powered">por <strong>'+CONFIG.name+'</strong></div>';
+
+  document.getElementById('quizContainer').classList.remove('active');
+  document.getElementById('resultContainer').classList.add('active');
 }
 
-function generateAll() {
-  const cfg = getConfig();
-  if (!cfg.name || cfg.name === 'Profissional') { alert('Preencha o nome do cliente antes de gerar.'); return; }
+function openWA(name,score,level,goal){
+  const text=CONFIG.msg+'\\n\\n📊 Meu resultado:\\n• Nome: '+name+'\\n• Pontuação: '+score+'/100\\n• Nível: '+level+'\\n• Objetivo: '+goal;
+  window.open('https://wa.me/55'+CONFIG.wa+'?text='+encodeURIComponent(text),'_blank');
+}
+function shareR(){const t='Fiz uma avaliação e tirei minha pontuação! Faça a sua:';if(navigator.share)navigator.share({title:'Avaliação',text:t,url:location.href});else{navigator.clipboard.writeText(t+' '+location.href);alert('Link copiado!');}}
 
-  const configJSON = JSON.stringify(cfg, null, 2);
-
-  const instructions = `═══════════════════════════════════════════
-  CONFIGURAÇÃO DO CLIENTE — ${cfg.name}
-═══════════════════════════════════════════
-
-${configJSON}
-
-═══════════════════════════════════════════
-  INSTRUÇÕES DE DEPLOY
-═══════════════════════════════════════════
-
-1. QUIZ DE CAPTAÇÃO
-   - Abrir o template "${cfg.template}" base
-   - Substituir variáveis de configuração:
-     • config.name = "${cfg.name}"
-     • config.title = "${cfg.reg}"
-     • config.whatsapp = "${cfg.whatsapp}"
-     • config.waMsg = "${cfg.waMsg}"
-     • config.color (--sage) = "${cfg.color1}"
-   - Salvar como index.html
-
-2. FORMULÁRIO DO PACIENTE
-   - Abrir formulario-paciente.html base
-   - Atualizar nome e cores
-   - Salvar na mesma pasta
-
-3. PAINEL DO NUTRICIONISTA
-   - Abrir painel-nutricionista.html base
-   - Atualizar cores e branding
-   - Salvar como painel.html
-
-4. DEPLOY
-   - Criar repositório: ${cfg.subdomain || 'cliente'}
-   - Upload dos 3 arquivos
-   - Ativar Netlify/Vercel
-   - Configurar subdomínio: ${cfg.subdomain || 'cliente'}.vvisolucoes.com.br
-   - Testar todos os links de WhatsApp
-
-5. ENTREGA AO CLIENTE
-   - Enviar link do quiz: ${cfg.subdomain || 'cliente'}.vvisolucoes.com.br
-   - Enviar link do painel: ${cfg.subdomain || 'cliente'}.vvisolucoes.com.br/painel
-   - Orientar a trocar o link da bio
-
-═══════════════════════════════════════════
-  CHECKLIST DE QUALIDADE
-═══════════════════════════════════════════
-
-[ ] Quiz funciona no celular
-[ ] Cores estão corretas
-[ ] Nome e CRN/CRP/CREF aparecem corretamente
-[ ] Botão WhatsApp abre com mensagem certa
-[ ] Formulário salva dados no localStorage
-[ ] Painel mostra dados do formulário
-[ ] Plano alimentar funciona
-[ ] Financeiro funciona
-[ ] Domínio ativo e com HTTPS`;
-
-  document.getElementById('codeTitle').textContent = '📦 Pacote gerado — ' + cfg.name;
-  document.getElementById('codeContent').textContent = instructions;
-  document.getElementById('codeModal').classList.add('open');
-
-  // Auto-save client
-  saveClient();
+buildQ();
+<\/script>
+</body>
+</html>`;
 }
 
-function previewQuiz() {
-  toast('Para preview completo, use os templates na aba Templates e abra os arquivos HTML gerados anteriormente.');
+// ═══ FORM BUILDER ═══
+function buildForm(c) {
+  const nichoLabels = {nutri:'Cadastro Nutricional',personal:'Cadastro Fitness',psi:'Cadastro — Saúde Emocional'};
+  const goalOptions = {
+    nutri:'<option value="emagrecer">Emagrecimento</option><option value="massa">Ganho de massa</option><option value="saude">Saúde e qualidade de vida</option><option value="esportivo">Performance esportiva</option>',
+    personal:'<option value="emagrecer">Emagrecimento</option><option value="massa">Hipertrofia</option><option value="condicionamento">Condicionamento</option><option value="esportivo">Performance</option>',
+    psi:'<option value="ansiedade">Ansiedade</option><option value="depressao">Depressão</option><option value="relacionamentos">Relacionamentos</option><option value="autoconhecimento">Autoconhecimento</option>'
+  };
+
+return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>${nichoLabels[c.nicho]||'Cadastro'} — ${c.name}</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--main:${c.cor1};--bg:${c.cor3};--text:#3A3A3A;--textL:#6B6B6B;--white:#FFFFFF;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;}
+.wrap{max-width:520px;margin:0 auto;padding:40px 24px 60px;}
+.header{text-align:center;margin-bottom:36px;}
+.logo{width:56px;height:56px;border-radius:18px;background:var(--main);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px;box-shadow:0 8px 24px rgba(0,0,0,0.15);}
+.header h1{font-family:'Playfair Display',serif;font-size:26px;color:#2D2D2D;margin-bottom:6px;}
+.header p{font-size:14px;color:var(--textL);}
+.section{background:white;border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+.section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--main);margin-bottom:18px;}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.row.single{grid-template-columns:1fr;}
+label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;}
+input,select,textarea{width:100%;height:44px;border-radius:10px;border:1.5px solid #DFE1E6;padding:0 14px;font-family:inherit;font-size:14px;color:var(--text);background:#F7F8FA;outline:none;}
+textarea{height:80px;padding:12px 14px;resize:vertical;}
+input:focus,select:focus,textarea:focus{border-color:var(--main);}
+.btn-submit{width:100%;height:52px;border-radius:16px;border:none;background:var(--main);color:white;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;}
+.success{display:none;text-align:center;padding:80px 24px;}
+.success.show{display:block;}
+.success .ico{font-size:64px;margin-bottom:20px;}
+.success h2{font-family:'Playfair Display',serif;font-size:24px;color:#2D2D2D;margin-bottom:10px;}
+.success p{font-size:15px;color:var(--textL);line-height:1.6;}
+.footer{text-align:center;margin-top:24px;font-size:12px;color:var(--textL);}
+.footer strong{color:var(--main);}
+</style>
+</head>
+<body>
+<div class="wrap" id="formWrap">
+  <div class="header">
+    <div class="logo">${c.nicho==='nutri'?'🥗':c.nicho==='personal'?'💪':'🧠'}</div>
+    <h1>${nichoLabels[c.nicho]||'Cadastro'}</h1>
+    <p>Preencha seus dados para iniciar seu acompanhamento</p>
+  </div>
+  <div class="section">
+    <div class="section-title">👤 Dados Pessoais</div>
+    <div class="row single"><div><label>Nome completo</label><input type="text" id="pName" placeholder="Seu nome"/></div></div>
+    <div class="row"><div><label>Idade</label><input type="number" id="pAge" placeholder="30"/></div><div><label>Sexo</label><select id="pSex"><option value="">Selecione</option><option value="F">Feminino</option><option value="M">Masculino</option></select></div></div>
+    <div class="row single"><div><label>WhatsApp</label><input type="tel" id="pPhone" placeholder="(00) 00000-0000"/></div></div>
+  </div>
+  <div class="section">
+    <div class="section-title">📏 Medidas</div>
+    <div class="row"><div><label>Peso (kg)</label><input type="number" step="0.1" id="pWeight" placeholder="72.5"/></div><div><label>Altura (cm)</label><input type="number" id="pHeight" placeholder="170"/></div></div>
+  </div>
+  <div class="section">
+    <div class="section-title">🎯 Objetivo</div>
+    <div class="row single"><div><label>Objetivo principal</label><select id="pGoal"><option value="">Selecione</option>${goalOptions[c.nicho]||goalOptions.nutri}</select></div></div>
+  </div>
+  <div class="section">
+    <div class="section-title">📝 Observações</div>
+    <div class="row single"><div><label>Algo que gostaria de compartilhar?</label><textarea id="pNotes" placeholder="Restrições, condições de saúde, etc..."></textarea></div></div>
+  </div>
+  <button class="btn-submit" onclick="submitForm()">Enviar meus dados</button>
+  <div class="footer">por <strong>${c.name}</strong></div>
+</div>
+<div class="success" id="success"><div class="ico">✅</div><h2>Dados enviados!</h2><p>${c.name.split(' ')[0]} receberá suas informações e entrará em contato pelo WhatsApp.</p></div>
+<script>
+function submitForm(){
+  const name=document.getElementById('pName').value.trim(),w=parseFloat(document.getElementById('pWeight').value),h=parseFloat(document.getElementById('pHeight').value),goal=document.getElementById('pGoal').value;
+  if(!name||!w||!h||!goal){alert('Preencha: nome, peso, altura e objetivo.');return;}
+  const bmi=(w/((h/100)**2)).toFixed(1);
+  const patient={id:Date.now().toString(36),name,age:parseInt(document.getElementById('pAge').value)||null,sex:document.getElementById('pSex').value,phone:document.getElementById('pPhone').value,goal,notes:document.getElementById('pNotes').value,createdAt:new Date().toISOString(),status:'new',records:[{date:new Date().toISOString().slice(0,10),weight:w,height:h,bmi:parseFloat(bmi)}],payments:[],mealPlans:[]};
+  try{const a=JSON.parse(localStorage.getItem('nutri_patients')||'[]');a.push(patient);localStorage.setItem('nutri_patients',JSON.stringify(a));}catch(e){}
+  document.getElementById('formWrap').style.display='none';document.getElementById('success').classList.add('show');
+}
+<\/script>
+</body>
+</html>`;
 }
 
-// ═══ CODE MODAL ═══
-function closeCode() { document.getElementById('codeModal').classList.remove('open'); }
+// ═══ DASHBOARD BUILDER ═══
+function buildDash(c) {
+return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel — ${c.name}</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"><\/script>
+<style>
+:root{--main:${c.cor1};--mainD:${c.cor1}DD;--mainP:${c.cor1}15;--accent:${c.cor2};--bg:#F7F8FA;--white:#FFFFFF;--dark:#1A1D23;--text:#3A3D45;--textL:#6B7080;--textXL:#9196A1;--border:#F0F1F4;--shadow:0 1px 3px rgba(0,0,0,0.06);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.topbar-left{display:flex;align-items:center;gap:10px;}
+.topbar-logo{width:36px;height:36px;border-radius:10px;background:var(--main);display:flex;align-items:center;justify-content:center;font-size:16px;}
+.topbar h2{font-size:18px;font-weight:800;color:var(--dark);}
+.topbar-date{font-size:13px;color:var(--textL);}
+.main{padding:24px;max-width:1000px;margin:0 auto;}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.kpi{background:var(--white);border-radius:14px;padding:18px;border:1px solid var(--border);}
+.kpi-icon{font-size:20px;margin-bottom:10px;}
+.kpi-val{font-size:26px;font-weight:800;color:var(--dark);}
+.kpi-lbl{font-size:13px;color:var(--textL);}
+.card{background:var(--white);border-radius:14px;border:1px solid var(--border);margin-bottom:16px;overflow:hidden;}
+.card-h{padding:16px 18px 0;display:flex;align-items:center;justify-content:space-between;}
+.card-t{font-size:15px;font-weight:700;color:var(--dark);}
+.badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:50px;background:var(--mainP);color:var(--main);}
+.card-b{padding:14px 18px 18px;}
+.chart-c{height:220px;position:relative;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead th{text-align:left;padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--textXL);background:var(--bg);border-bottom:1px solid var(--border);}
+tbody td{padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text);}
+tbody tr:hover{background:var(--mainP);}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr{cursor:pointer;}
+.td-name{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--dark);}
+.td-av{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;background:var(--main);}
+.p-status{padding:4px 10px;border-radius:50px;font-size:11px;font-weight:700;}
+.st-new{background:#EBF3FC;color:#4A8FD6;}.st-active{background:var(--mainP);color:var(--main);}.st-attention{background:#FFF0EE;color:#E06B5E;}
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:600;align-items:center;justify-content:center;padding:20px;}
+.modal-ov.open{display:flex;}
+.modal{background:var(--white);border-radius:20px;width:100%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,0.15);}
+.modal-h{padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between;}
+.modal-h h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--dark);}
+.modal-x{width:32px;height:32px;border-radius:8px;border:none;background:var(--border);cursor:pointer;font-size:16px;}
+.modal-bd{padding:16px 24px 24px;}
+.m-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.m-stat{background:var(--bg);border-radius:10px;padding:12px;text-align:center;}
+.m-stat .v{font-size:20px;font-weight:800;color:var(--dark);}
+.m-stat .l{font-size:11px;color:var(--textXL);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;}
+.nm-toggle{width:100%;height:44px;border-radius:10px;border:2px dashed var(--main);background:var(--mainP);color:var(--main);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:14px;}
+.nm-form{display:none;background:var(--mainP);border:1px solid var(--main)20;border-radius:10px;padding:16px;margin-bottom:14px;}
+.nm-form.open{display:block;}
+.nm-form h4{font-size:14px;font-weight:700;color:var(--main);margin-bottom:12px;}
+.nm-r{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.nm-g label{display:block;font-size:11px;font-weight:700;color:var(--textL);margin-bottom:4px;}
+.nm-g input{width:100%;height:38px;border-radius:8px;border:1.5px solid var(--border);padding:0 10px;font-family:inherit;font-size:13px;outline:none;}
+.nm-g input:focus{border-color:var(--main);}
+.btn-nm{width:100%;height:38px;border-radius:8px;border:none;background:var(--main);color:white;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;margin-top:10px;}
+.m-chart{height:180px;margin-bottom:14px;}
+.m-notes{background:var(--mainP);border-radius:10px;padding:14px;}
+.m-notes h4{font-size:13px;font-weight:700;color:var(--main);margin-bottom:6px;}
+.m-notes p{font-size:13px;color:var(--text);line-height:1.6;}
+.empty{text-align:center;padding:60px 24px;color:var(--textL);}
+.empty .ico{font-size:48px;margin-bottom:12px;}
+.empty h3{font-size:16px;color:var(--dark);margin-bottom:6px;}
+.btn-demo{margin-top:16px;padding:10px 24px;border-radius:50px;border:2px solid var(--main);background:transparent;color:var(--main);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;}
+.btn-demo:hover{background:var(--main);color:white;}
+@media(max-width:600px){.kpi-grid{grid-template-columns:1fr 1fr;}.m-stats{grid-template-columns:repeat(2,1fr);}.main{padding:16px;}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-left"><div class="topbar-logo">${c.nicho==='nutri'?'🥗':c.nicho==='personal'?'💪':'🧠'}</div><h2>${c.name.split(' ')[0]} — Painel</h2></div><span class="topbar-date" id="topDate"></span></div>
+<div class="main" id="dashMain"></div>
+<div class="modal-ov" id="modalOv" onclick="if(event.target===this)closeModal()"><div class="modal" id="modalC"></div></div>
+<script>
+const P=()=>{try{return JSON.parse(localStorage.getItem('nutri_patients')||'[]')}catch{return[];}};
+const SP=a=>localStorage.setItem('nutri_patients',JSON.stringify(a));
+const GL={emagrecer:'Emagrecer',massa:'Ganho de massa',saude:'Saúde',esportivo:'Esportivo',condicionamento:'Condicionamento',ansiedade:'Ansiedade',depressao:'Depressão',relacionamentos:'Relacionamentos',autoconhecimento:'Autoconhecimento'};
+const SL={new:'Novo',active:'Ativo',attention:'Atenção'};
+const SC={new:'st-new',active:'st-active',attention:'st-attention'};
+const ini=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2);
+document.getElementById('topDate').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
 
-function copyCode() {
-  const text = document.getElementById('codeContent').textContent;
-  navigator.clipboard.writeText(text);
-  toast('Copiado!');
+function renderDash(){
+  const pts=P(),el=document.getElementById('dashMain');
+  if(!pts.length){el.innerHTML='<div class="empty"><div class="ico">📋</div><h3>Nenhum paciente cadastrado</h3><p style="font-size:13px">Quando pacientes preencherem o formulário, os dados aparecem aqui.</p></div>';return;}
+  const total=pts.length,nw=pts.filter(p=>p.status==='new').length,att=pts.filter(p=>p.status==='attention').length;
+  el.innerHTML=\`
+    <div class="kpi-grid"><div class="kpi"><div class="kpi-icon">👥</div><div class="kpi-val">\${total}</div><div class="kpi-lbl">Pacientes</div></div><div class="kpi"><div class="kpi-icon">🆕</div><div class="kpi-val">\${nw}</div><div class="kpi-lbl">Novos</div></div><div class="kpi"><div class="kpi-icon">⚠️</div><div class="kpi-val">\${att}</div><div class="kpi-lbl">Atenção</div></div><div class="kpi"><div class="kpi-icon">📊</div><div class="kpi-val">\${pts.filter(p=>p.records&&p.records.length>1).length}</div><div class="kpi-lbl">Em evolução</div></div></div>
+    <div class="card"><div class="card-h"><div class="card-t">Todos os pacientes</div><div class="badge">\${total}</div></div><div style="overflow-x:auto"><table><thead><tr><th>Paciente</th><th>Peso</th><th>IMC</th><th>Objetivo</th><th>Status</th></tr></thead><tbody>
+    \${pts.map(p=>{const l=p.records[p.records.length-1];return \`<tr onclick="openP('\${p.id}')"><td><div class="td-name"><div class="td-av">\${ini(p.name)}</div>\${p.name}</div></td><td><strong>\${l.weight}kg</strong></td><td>\${l.bmi}</td><td>\${GL[p.goal]||p.goal||'—'}</td><td><span class="p-status \${SC[p.status]}">\${SL[p.status]}</span></td></tr>\`;}).join('')}
+    </tbody></table></div></div>\`;
 }
 
-function downloadCode() {
-  const cfg = getConfig();
-  const text = document.getElementById('codeContent').textContent;
-  const blob = new Blob([text], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = (cfg.subdomain || 'cliente') + '-config.txt';
-  a.click();
-  URL.revokeObjectURL(url);
-  toast('Arquivo baixado!');
+function openP(id){
+  const pts=P(),p=pts.find(x=>x.id===id);if(!p)return;
+  const l=p.records[p.records.length-1],f=p.records[0],diff=(l.weight-f.weight).toFixed(1);
+  document.getElementById('modalC').innerHTML=\`
+    <div class="modal-h"><h3>\${p.name}</h3><button class="modal-x" onclick="closeModal()">✕</button></div>
+    <div class="modal-bd">
+      <div class="m-stats"><div class="m-stat"><div class="v">\${l.weight}kg</div><div class="l">Peso</div></div><div class="m-stat"><div class="v">\${l.bmi}</div><div class="l">IMC</div></div><div class="m-stat"><div class="v">\${diff>0?'+':''}\${diff}kg</div><div class="l">Variação</div></div></div>
+      <button class="nm-toggle" onclick="document.getElementById('nmF').classList.toggle('open')">➕ Nova medição</button>
+      <div class="nm-form" id="nmF"><h4>📏 Nova medição</h4><div class="nm-r"><div class="nm-g"><label>Data</label><input type="date" id="nmD" value="\${new Date().toISOString().slice(0,10)}"/></div><div class="nm-g"><label>Peso (kg)</label><input type="number" step="0.1" id="nmW" placeholder="\${l.weight}"/></div></div><button class="btn-nm" onclick="saveM('\${id}')">💾 Salvar</button></div>
+      \${p.records.length>1?'<div class="m-chart"><canvas id="mCh"></canvas></div>':''}
+      <div class="m-notes"><h4>📋 Informações</h4><p><strong>Objetivo:</strong> \${GL[p.goal]||p.goal||'—'}<br><strong>Idade:</strong> \${p.age||'—'} · <strong>Sexo:</strong> \${p.sex||'—'}<br>\${p.notes?'<strong>Obs:</strong> '+p.notes+'<br>':''}<strong>WhatsApp:</strong> \${p.phone||'—'}</p></div>
+    </div>\`;
+  document.getElementById('modalOv').classList.add('open');
+  if(p.records.length>1){setTimeout(()=>{const labels=p.records.map(r=>{const[,m,d]=r.date.split('-');return d+'/'+m;});new Chart(document.getElementById('mCh'),{type:'line',data:{labels,datasets:[{label:'Peso',data:p.records.map(r=>r.weight),borderColor:'${c.cor1}',backgroundColor:'${c.cor1}20',borderWidth:2.5,pointRadius:5,tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:'#F0F1F4'}}}}});},100);}
 }
 
-// ═══ TOAST ═══
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2500);
+function saveM(id){
+  const w=parseFloat(document.getElementById('nmW').value);if(!w){alert('Informe o peso.');return;}
+  const pts=P(),p=pts.find(x=>x.id===id);if(!p)return;
+  const h=p.records[0].height,bmi=(w/((h/100)**2)).toFixed(1);
+  p.records.push({date:document.getElementById('nmD').value||new Date().toISOString().slice(0,10),weight:w,height:h,bmi:parseFloat(bmi)});
+  p.records.sort((a,b)=>a.date.localeCompare(b.date));
+  if(p.status==='new')p.status='active';
+  SP(pts);openP(id);
+}
+
+function closeModal(){document.getElementById('modalOv').classList.remove('open');renderDash();}
+renderDash();
+<\/script>
+</body>
+</html>`;
 }
 </script>
 </body>
